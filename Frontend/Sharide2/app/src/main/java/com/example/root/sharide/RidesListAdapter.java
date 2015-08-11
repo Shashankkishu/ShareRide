@@ -1,0 +1,83 @@
+package com.example.root.sharide;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
+
+/**
+ * Created by root on 28/6/15.
+ */
+public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.RideViewHolder>{
+    public  Context mContext;
+    private List<RideGet> rideGetList;
+    private CardView cv;
+    public RidesListAdapter(List<RideGet> contactList) {
+        this.rideGetList = contactList;
+    }
+
+    @Override
+    public int getItemCount() {
+        return rideGetList.size();
+    }
+
+    @Override
+    public void onBindViewHolder(RideViewHolder rideViewHolder, int i) {
+        RideGet ride  = rideGetList.get(i);
+        rideViewHolder.userName.setText(ride.getUserName());
+        rideViewHolder.userTime.setText(ride.getUserTime());
+        rideViewHolder.userDate.setText(ride.getUserDate());
+        rideViewHolder.origin.setText(ride.getOrigin());
+        rideViewHolder.destination.setText(ride.getDestination());
+    }
+
+    @Override
+    public RideViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.
+                from(viewGroup.getContext()).
+                inflate(R.layout.list_item_rides, viewGroup, false);
+        cv = (CardView)viewGroup.findViewById(R.id.card_view);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(viewGroup.getContext(), RideDedicatedPage.class);
+                viewGroup.getContext().startActivity(intent);
+            }
+        });
+        return new RideViewHolder(itemView);
+    }
+
+
+    public static class RideViewHolder extends RecyclerView.ViewHolder {
+        protected TextView userName;
+        protected TextView userTime;
+        protected TextView userDate;
+        protected TextView origin;
+        protected TextView destination;
+        public View view;
+        public RideViewHolder(View v) {
+            super(v);
+//            view = v;
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(view, RideDedicatedPage.class);
+//                    view.startActivity(intent);
+//                }
+//            });
+
+            userName =  (TextView) v.findViewById(R.id.userName);
+            userDate = (TextView)  v.findViewById(R.id.userDate);
+            userTime = (TextView)  v.findViewById(R.id.userTime);
+            origin = (TextView) v.findViewById(R.id.origin);
+            destination= (TextView) v.findViewById(R.id.destination);
+        }
+    }
+}

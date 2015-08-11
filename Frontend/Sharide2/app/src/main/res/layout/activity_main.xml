@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/theme_primary"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <com.example.root.sharide.CustomTextView
+            android:id="@+id/welcomeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hOP!On"
+            android:gravity="center"
+            android:layout_marginTop="32dp"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/createAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:textSize="16dp"
+            android:textColor="@color/theme_primary"
+            android:text="#save_with_hop"
+            android:background="@drawable/rectangle_bg_border_white"
+            android:layout_below="@+id/welcomeText"
+            android:textAllCaps="false"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

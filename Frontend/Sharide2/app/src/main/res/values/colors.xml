@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    /*****************O1 primary theme *************/
+    <color name="theme_primary">#FF9100</color>
+    <color name="theme_primary_dark">#E65100</color>
+    <color name="theme_primary_light">#FFCC80</color>
+    /********************************************************
+
+    /***************** general colors *************/
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="semiTransparent">#4d000000</color>
+    /********************************************************
+
+    <color name="origin">#ff9100</color>
+    <color name="destination">#00e676</color>
+
+</resources>
