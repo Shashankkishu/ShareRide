@@ -23,6 +23,7 @@ var rideSchema = mongoose.Schema({
 	starttime:String,
 	origin:String,
 	end:String,
+	millis: long,
 	availableseats:int,
 	totalseats:int,
 	onlygirls:boolean,

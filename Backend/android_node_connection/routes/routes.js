@@ -1,8 +1,13 @@
 var chgpass = require('config/chgpass');
 var signup = require('config/signup');
 var login = require('config/login');
-// var giveride = require('config/giveride');
- 
+var addride = require('config/addride');
+var nodemailer = require('nodemailer');
+var next30rides = require('config/next30rides');
+var rides = require('config/models');
+var mongoose = require('mongoose');
+var smtpTransport = require('nodemailer-smtp-transport');
+
  
 module.exports = function(app) {
  
@@ -12,12 +17,49 @@ module.exports = function(app) {
  
         res.end("share-ride-project");
     });
+    app.get('/api/email', function(req, res)
+     {
+            var nodemailer = require('nodemailer');
+                console.log(nodemailer);
+            // create reusable transporter object using SMTP transport
+            var transporter = nodemailer.createTransport("SMTP",{
+                service: 'Gmail',
+                debug: true,
+                auth: {
+                    user: "shashankkishu@gmail.com",
+                            pass: "gmailpassword"
+                }
+            });
+
+            // NB! No need to recreate the transporter object. You can use
+            // the same transporter object for all e-mails
+
+            // setup e-mail data with unicode symbols
+            var mailOptions = {
+                from: 'Shashank Bhushan ✔ <shashankkishu@gmail.com>', // sender address
+                to: 'shashankkishu@gmail.com', // list of receivers
+                subject: 'Hello ✔', // Subject line
+                text: 'Hello world ✔', // plaintext body
+                html: '<b>Hello world ✔</b>' // html body
+            };
+
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    return console.log(error);
+                }
+                console.log('Message sent: ' + info.response);
+
+            });
+    });
  
  // This gets acivated when the user hits the login button (if he is a excisting user)
     app.post('/api/login',function(req,res){
-        var email = req.body.email;
-            var password = req.body.password;
- 
+        console.log(JSON.stringify(req.body));
+        var email = req.body["x-auth-email"];
+        var password = req.body["x-auth-password"];
+        console.log('Password'+password);
+        console.log('Email'+email);
         login.login(email,password,function (found) {
             console.log(found);
             res.json(found);
@@ -27,21 +69,31 @@ module.exports = function(app) {
  // This gets activated when user hits the sign up 
     app.post('/api/signup',function(req,res){
         console.log(JSON.stringify(req.body));
-        var email = req.body.email;
-        // var xAuthEmail = req.header.
-        // var xAuthPassword
-        // var xAuthName
-            console.log('has entered the emai if + '+email);
-
-            var password = req.body.password;
-    console.log('has entered the emai if + '+password);
-
-        signup.signup(email,password,function (found) {
+        var email = req.body["x-auth-email"];
+        var password = req.body["x-auth-password"];
+        var name = req.body["x-auth-name"];
+        // console.log('Password'+password);
+        // console.log('Email'+email);
+        signup.signup(email,password,name,function (found) {
             console.log(found);
             res.json(found);
     });
     });
- 
+ app.get('/api/next30rides', function(req, res) {
+        var results = rides.find({"millis":{$gte:"1439474834014"}})
+        // (function(err, results1)
+        // {
+        //     console.log(results1+results); // output all records
+        // });
+        // next30rides.next30rides({
+        //     console.log(res);
+        //     res.json(res);
+        // });
+        // console.log(results);
+        console.log(results.stringify);
+        res.json(results.stringify);
+
+    });
  //This gets activated when we hit the change password in the profile section password 
     app.post('/api/chgpass', function(req, res) {
         var id = req.body.id;
@@ -79,22 +131,24 @@ module.exports = function(app) {
     });
 
 // This gets activiated when we hit the submit button in the add ride page .
- app.post('/api/addride',function(req,res){
-    
-        var ridecode = req.body.ridecode;
-        var adminemail = req.body.adminemail;
-        var starttime = req.body.starttime;
-        var origin = req.body.origin;
-        var end = req.body.end;
-        var availableseats = req.body.availableseats;
-        var totalseats = req.body.totalseats;
-        var onlygirls = req.body.onlygirls;
-        var price = req.body.price;
-        var mode = req.body.mode;
-        var modeinfo = req.body.modeinfo;
-        var riders = req.body.riders;
+ app.post('/api/addrides',function(req,res){
+                // console.log(req.body);
 
-        addride.addride(ridecode,adminemail,starttime,origin,end,availableseats,totalseats,samesex,price,mode,moderiders,riders,function (found) {
+        // var adminemail = req.body["initiator"];
+        var date = req.body["date"]
+        var millis = req.body["millis"]
+        var starttime = req.body["time"];
+        var origin = req.body["origin"];
+        var end = req.body["destination"];
+        var availableseats = req.body["availableseats"];
+        var totalseats = req.body["totalseats"];
+        var onlygirls = req.body["onlygirls"];
+        var price = req.body["price"];
+        var mode = req.body["transport_mode"];
+        var modeinfo = req.body["transport_mode_info"];
+        // var riders = req.body["riders"];
+
+        addride.addride(starttime,origin,end,date,millis,availableseats,totalseats,onlygirls,price,mode,modeinfo,function (found) {
             console.log(found);
             res.json(found);
     });
