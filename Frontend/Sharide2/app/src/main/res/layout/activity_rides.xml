@@ -44,13 +44,13 @@
 
     <RelativeLayout
         android:id="@+id/drawer_fragment"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
         <RelativeLayout
             android:id="@+id/drawerHeader"
-            android:layout_width="320dp"
+            android:layout_width="250dp"
             android:layout_height="178dp"
             android:paddingTop="36dp"
             android:paddingLeft="12dp"
@@ -91,12 +91,193 @@
         <ListView
             android:layout_below="@+id/drawerHeader"
             android:id="@+id/left_drawer"
-            android:layout_width="320dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:background="@color/white"/>
+
+    </RelativeLayout>
+    <!--down here we declare the navigation drawer from the right -->
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/drawer_fragmentright"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right">
+
+        <RelativeLayout
+            android:id="@+id/drawerHeaderright"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:paddingTop="36dp"
+            android:layout_alignParentBottom="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp"
+            android:background="@color/button_material_dark">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_done_white_48dp"/>
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_clear_white_48dp"/>
+            </LinearLayout>
+            <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/userImageright"-->
+                <!--android:layout_width="64dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:src="@drawable/pp"-->
+                <!--android:layout_margin="4dp"/>-->
+
+            <!--<com.example.root.sharide.CustomTextView-->
+                <!--android:id="@+id/userNameright"-->
+                <!--android:layout_below="@+id/userImageright"-->
+                <!--android:layout_marginTop="4dp"-->
+                <!--android:layout_marginLeft="4dp"-->
+                <!--android:layout_marginRight="4dp"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textStyle="bold"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Shashank Bhushan"/>-->
+
+            <!--<com.example.root.sharide.CustomTextView-->
+                <!--android:id="@+id/userEmailright"-->
+                <!--android:layout_below="@+id/userNameright"-->
+                <!--android:layout_marginLeft="4dp"-->
+                <!--android:textSize="14sp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="shashankkishu@gmail.com"/>-->
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_and_end"
+            android:weightSum="2"
+            android:padding="12dp"
+            android:layout_above="@id/date_and_time">
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="24dp"
+            android:id="@+id/originCard"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Spinner
+                android:id="@+id/originSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:dropDownSelector="@drawable/abc_spinner_textfield_background_material"
+                app:spinnerMode="dropdown"
+                android:popupElevation="8dp"
+                android:prompt="@string/origin"
+                android:textColorHint="@color/primary_dark_material_light"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/edittext_bg"
+                android:singleLine="true"
+                android:padding="12dp"/>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/destinationCard"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1">
+            <Spinner
+                android:id="@+id/endSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/end"
+                android:textColorHint="@color/primary_dark_material_light"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/edittext_bg"
+                android:singleLine="true"
+                android:padding="12dp"/>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_and_time"
+        android:weightSum="2"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@id/drawerHeaderright">
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="24dp"
+            android:id="@+id/timecard"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            >
+            <TextView
+                android:textSize="20sp"
+                android:background="@drawable/edittext_bg"
+                android:singleLine="true"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/timePicker"
+                android:text="@string/pick_time"
+                android:clickable="true"
+                android:inputType="none"/>
+
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/datecard"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:elevation="8dp"
+            >
+            <TextView
+                android:elevation="4dp"
+                android:textSize="20sp"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/datePicker"
+                android:text="@string/pick_date"
+                android:clickable="true"
+                android:inputType="none"/>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <!--<ListView-->
+            <!--android:layout_above="@+id/drawerHeaderright"-->
+            <!--android:id="@+id/right_drawer"-->
+            <!--android:layout_width="250dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:choiceMode="singleChoice"-->
+            <!--android:divider="@android:color/transparent"-->
+            <!--android:dividerHeight="0dp"-->
+            <!--android:background="@color/white"/>-->
 
     </RelativeLayout>
 

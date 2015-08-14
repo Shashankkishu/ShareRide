@@ -57,13 +57,13 @@ public class MyRides extends AppCompatActivity{
         ride2.setOrigin("pune, Maharashtra");
         ride2.setDestination("Kanpur , Uttar Pradesh");
 
-        List<RideGet> rideGetList = new ArrayList<>();
-        rideGetList.add(ride1);
-        rideGetList.add(ride2);
-        rideGetList.add(ride3);
-        rideGetList.add(ride1);
-        rideGetList.add(ride2);
-        rideGetList.add(ride3);
+        List<RidePost> rideGetList = new ArrayList<>();
+//        rideGetList.add(ride1);
+//        rideGetList.add(ride2);
+//        rideGetList.add(ride3);
+//        rideGetList.add(ride1);
+//        rideGetList.add(ride2);
+//        rideGetList.add(ride3);
 
         RidesListAdapter ridesListAdapter = new RidesListAdapter(rideGetList);
         mRecyclerView.setAdapter(ridesListAdapter);

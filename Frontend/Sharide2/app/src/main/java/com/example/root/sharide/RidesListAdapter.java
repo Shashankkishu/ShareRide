@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.RideViewHolder>{
     public  Context mContext;
-    private List<RideGet> rideGetList;
+    private List<RidePost> rideGetList;
     private CardView cv;
-    public RidesListAdapter(List<RideGet> contactList) {
+    public RidesListAdapter(List<RidePost> contactList) {
         this.rideGetList = contactList;
     }
 
@@ -30,12 +30,12 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
 
     @Override
     public void onBindViewHolder(RideViewHolder rideViewHolder, int i) {
-        RideGet ride  = rideGetList.get(i);
-        rideViewHolder.userName.setText(ride.getUserName());
-        rideViewHolder.userTime.setText(ride.getUserTime());
-        rideViewHolder.userDate.setText(ride.getUserDate());
-        rideViewHolder.origin.setText(ride.getOrigin());
-        rideViewHolder.destination.setText(ride.getDestination());
+        RidePost ride  = rideGetList.get(i);
+        rideViewHolder.userName.setText("Shashank Bhushan");
+        rideViewHolder.userTime.setText(ride.getlTime());
+        rideViewHolder.userDate.setText(ride.getlDate());
+        rideViewHolder.origin.setText(ride.getlOrigin());
+        rideViewHolder.destination.setText(ride.getlDestination());
     }
 
     @Override

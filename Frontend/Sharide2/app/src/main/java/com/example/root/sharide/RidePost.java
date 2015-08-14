@@ -9,44 +9,54 @@ import java.util.ArrayList;
  */
 public class RidePost {
 
-    @SerializedName("initiator")
-    private String lInitiator;
-
+    @SerializedName("admin_name")
+    private String ladminname;
     @SerializedName("origin")
     private String lOrigin;
+    @SerializedName("millis")
+    private long lmillis;
     @SerializedName("destination")
     private String lDestination;
     @SerializedName("date")
     private String lDate;
     @SerializedName("time")
     private String lTime;
+    @SerializedName("freeSpace")
+    private Integer lfreeSpace;
     @SerializedName("transport_mode")
     private String lTransport_mode;
+    @SerializedName("transport_mode_info")
+    private String lTransport_mode_info;
     @SerializedName("price")
     private Integer lPrice;
     @SerializedName("has_booked")
     private Boolean lHas_booked;
     @SerializedName("only_girls")
     private Boolean lGirls;
-    @SerializedName("only_boys")
-    private Boolean lBoys;
+//    @SerializedName("only_boys")
+//    private Boolean lBoys;
     @SerializedName("latitude")
     private String lLatitude;
 
-    public String getlInitiator() {
-        return lInitiator;
+
+    public String getlOrigin() {return lOrigin;}
+
+    public void setlOrigin(String lOrigin) {this.lOrigin = lOrigin;}
+
+    public String getlAdmin_name() {
+        return ladminname;
     }
 
-    public void setlInitiator(String lInitiator) {
-        this.lInitiator = lInitiator;
+    public void setladminname(String ladminname) {
+        this.ladminname = ladminname;
     }
 
-    public String getlOrigin() {
-        return lOrigin;
+    public long getlmillis() {
+        return lmillis;
     }
 
-    public void setlOrigin(String lOrigin) {
-        this.lOrigin = lOrigin;
+    public void setlmillis(long lmillis) {
+        this.lmillis = lmillis;
     }
 
     public String getlDestination() {
@@ -73,12 +83,27 @@ public class RidePost {
         this.lTime = lTime;
     }
 
+    public Integer getlfreeSpace() {
+        return lfreeSpace;
+    }
+
+    public void setlfreeSpace(int lfreeSpace) {
+        this.lfreeSpace = lfreeSpace;
+    }
+
     public String getlTransport_mode() {
         return lTransport_mode;
     }
 
     public void setlTransport_mode(String lTransport_mode) {
         this.lTransport_mode = lTransport_mode;
+    }
+    public String getlTransport_mode_info() {
+        return lTransport_mode_info;
+    }
+
+    public void setlTransport_mode_info(String lTransport_mode_info) {
+        this.lTransport_mode_info = lTransport_mode_info;
     }
 
     public Integer getlPrice() {
@@ -93,7 +118,7 @@ public class RidePost {
         return lHas_booked;
     }
 
-    public void setlHas_bboked(Boolean lHas_bboked) {
+    public void setlHas_booked(Boolean lHas_bboked) {
         this.lHas_booked = lHas_bboked;
     }
 
@@ -105,13 +130,13 @@ public class RidePost {
         this.lGirls = lGirls;
     }
 
-    public Boolean getlBoys() {
-        return lBoys;
-    }
-
-    public void setlBoys(Boolean lBoys) {
-        this.lBoys = lBoys;
-    }
+//    public Boolean getlBoys() {
+//        return lBoys;
+//    }
+//
+//    public void setlBoys(Boolean lBoys) {
+//        this.lBoys = lBoys;
+//    }
 
     public String getlLatitude() {
         return lLatitude;

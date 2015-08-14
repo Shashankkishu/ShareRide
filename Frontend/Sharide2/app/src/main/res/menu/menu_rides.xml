@@ -4,4 +4,12 @@
     tools:context="com.example.root.sharide.RidesActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/filter"
+        android:icon="@drawable/filter"
+        app:showAsAction="always"
+        android:title="" />
+    <item android:id="@+id/sort"
+        android:icon="@drawable/ic_sort_white_36dp"
+        app:showAsAction="always"
+        android:title="" />
 </menu>

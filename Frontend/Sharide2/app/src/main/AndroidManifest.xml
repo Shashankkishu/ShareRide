@@ -39,13 +39,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.root.sharide.RidesActivity" />
         </activity>
-        <activity
-        android:name=".popupdialog"
-        android:label="@string/title_activity_login" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.root.sharide.RideDedicatedPage" />
-    </activity>
 
         <activity
             android:name=".MyRides"

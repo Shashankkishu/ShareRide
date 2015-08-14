@@ -9,7 +9,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.Body;
-import retrofit.http.Header;
+import retrofit.http.GET;
 import retrofit.http.POST;
 
 /**
@@ -18,7 +18,7 @@ import retrofit.http.POST;
 public class AppClient {
 
 //    public static final String URL_UAT = "http://192.168.1.14:8080/api";
-    public static final String URL_UAT = "http://10.16.18.16:8080/api";
+    public static final String URL_UAT = "http://192.168.0.100:8080/api";
     public static final String URL_PROD = "";
     public static String URL = "";
     public static boolean isDebuggable = true;
@@ -59,19 +59,40 @@ public class AppClient {
     private interface IApiClient {
 
         @POST("/signup")
-        void registerUser(@Header(xAuthName) String name, @Header(xAuthEmail) String email, @Header(xAuthPassword) String password, Callback<JsonObject> jsonObjectCallback);
+        void registerUser(@Body JsonObject dataObject, Callback<JsonObject> jsonObjectCallback);
 
         @POST("/login")
         void authenticateUser(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback );
 
         @POST("/addrides")
-        void addNewRide(@Body RidePost ridePost,Callback<JsonObject> jsonObjectCallback);
+        void addNewRide(@Body RidePost ridePost, Callback<JsonObject> jsonObjectCallback);
+
+        @GET("/getrides")
+        void getrides(Callback<GetRidesModel> jsonObjectCallback);
+
 
     }
+    public static void getrides( final INetworkResponse<GetRidesModel> listener) {
+        System.out.print("hit the get rides");
+        getRestAdapter().create(IApiClient.class).getrides(new Callback<GetRidesModel>() {
+            @Override
+            public void success(GetRidesModel model, Response response) {
 
-    public static void registerUser(String name, String email, String password, final INetworkResponse<JsonObject> listener) {
+                if (listener != null) {
+                    listener.onSuccess(model);
+                }
+            }
 
-        getRestAdapter().create(IApiClient.class).registerUser(name, email, password, new Callback<JsonObject>() {
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("GetRidesAPI", error.toString());
+            }
+        });
+    }
+
+    public static void registerUser(JsonObject dataObject, final INetworkResponse<JsonObject> listener) {
+           System.out.print("hit the reguster user");
+        getRestAdapter().create(IApiClient.class).registerUser(dataObject, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
 

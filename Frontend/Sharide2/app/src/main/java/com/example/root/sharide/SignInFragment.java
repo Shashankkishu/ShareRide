@@ -53,16 +53,16 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
 
         if(view == this.signInButton){
 
-            JsonObject object = new JsonObject();
-            object.addProperty("email", getEditTextValue(userName));
-            object.addProperty("password", getEditTextValue(password));
-//            final String name = userName.getText().toString();
+            JsonObject dataobject = new JsonObject();
+            dataobject.addProperty("x-auth-password", getEditTextValue(password));
+            dataobject.addProperty("x-auth-email", getEditTextValue(userName));
+            final String name = userName.getText().toString();
 //            final String Password = password.getText().toString();
-            AppClient.authenticateUser(object, new AppClient.INetworkResponse<JsonObject>() {
+            AppClient.authenticateUser(dataobject, new AppClient.INetworkResponse<JsonObject>() {
                 @Override
                 public void onSuccess(JsonObject data) {
 
-                    if(data.get("success").getAsBoolean()){
+                    if(data.get("res").getAsBoolean()){
                         Snackbar.make(getView(), "Login successful", Snackbar.LENGTH_LONG).show();
 
                         SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);

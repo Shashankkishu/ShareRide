@@ -32,12 +32,14 @@ import java.util.Calendar;
 public class NewRideActivity_shashank extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener, AdapterView.OnItemClickListener {
      Boolean mBoys= false,mGirls= false;
     private TextView mtimePicker,mdatePicker;
-    CheckBox mSameSex,mHaveRide ;
+    CheckBox mgirlsonly,mHaveRide ;
     private Spinner mOrigin , mEnd , mMode;
     EditText mOtherInfo , mAmount,mAllowedPeople;
     TimePicker mTimePicker;
     CardView mOtherinfoCard,mTransportModeCard,mAmountCard;
     Button Submit;
+
+
     final Calendar c = Calendar.getInstance();
     private int mYear = c.get(Calendar.YEAR),mMonth = c.get(Calendar.MONTH),mDay = c.get(Calendar.DAY_OF_MONTH),mHour = c.get(Calendar.HOUR_OF_DAY),mMinute = c.get(Calendar.MINUTE);
     @Override
@@ -69,7 +71,7 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
         mHaveRide = (CheckBox)findViewById(R.id.haveRide);//to check if the user has already booked a ride or not .
         mHaveRide.setOnClickListener(this);
 
-        mSameSex = (CheckBox)findViewById(R.id.samesex);//to check if the user wants only the same type of companions or not.
+        mgirlsonly = (CheckBox)findViewById(R.id.samesex);//to check if the user wants only the same type of companions or not.
         mOtherInfo=(EditText)findViewById(R.id.otherinfo); // to set he info about the ride he has booked if any .
         mAllowedPeople=(EditText)findViewById(R.id.freeSpace);//no of people allowed to ride with them .
         mAmount=(EditText)findViewById(R.id.amount); // amount the user had already paid the to the ride driver if any.
@@ -144,6 +146,7 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
+
             // Launch Date Picker Dialog
             DatePickerDialog dpd = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
@@ -191,35 +194,52 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
         }
         }
             if (v == Submit) {
+                Calendar calendar = Calendar.getInstance();
 
-            RidePost mRidePost = new RidePost();
+                calendar.set(mYear,mMonth,mDay,
+                        mHour,mMinute, 0);
+                long startTime = calendar.getTimeInMillis();
+
+                RidePost mRidePost = new RidePost();
+            mRidePost.setlmillis(startTime);
             mRidePost.setlOrigin(mOrigin.getSelectedItem().toString());
             mRidePost.setlDestination(mEnd.getSelectedItem().toString());
             mRidePost.setlTime(mtimePicker.getText().toString());
             mRidePost.setlDate(mdatePicker.getText().toString());
-             mRidePost.setlPrice(Integer.parseInt(mAmount.getText().toString()));
-            if(mMode.getSelectedItemPosition() == 0){
-                mRidePost.setlTransport_mode("None");
-                mRidePost.setlHas_bboked(false);
-                mRidePost.setlPrice(0);
+            mRidePost.setlfreeSpace(Integer.parseInt(mAllowedPeople.getText().toString()));
+            mRidePost.setlGirls(mgirlsonly.isChecked());
+//             mRidePost.setlPrice(Integer.parseInt(mAmount.getText().toString()));
+            if(mHaveRide.isChecked()){
+                mRidePost.setlHas_booked(true);
+                mRidePost.setlPrice(Integer.parseInt(mAmount.getText().toString()));
+                mRidePost.setlTransport_mode(mMode.getSelectedItem().toString());
+                if(mMode.getSelectedItemPosition() == 3){
+                    mRidePost.setlTransport_mode_info(mOtherInfo.getText().toString());
+                }
+
             }
             else {
-                mRidePost.setlTransport_mode(mMode.getSelectedItem().toString());
-                mRidePost.setlHas_bboked(true);
-                if(mMode.getSelectedItemPosition() == 3){
-                    mRidePost.setlTransport_mode(mOtherInfo.getText().toString());
-                }
+//                mRidePost.setlTransport_mode(mMode.getSelectedItem().toString());
+                mRidePost.setlHas_booked(false);
+                mRidePost.setlTransport_mode(null);
+                mRidePost.setlPrice(null);
+                mRidePost.setlTransport_mode_info(null);
+//                if(mMode.getSelectedItemPosition() == 3){
+//                    mRidePost.setlTransport_mode(mOtherInfo.getText().toString());
+//                }
             }
-            mRidePost.setlGirls(false);
-            mRidePost.setlBoys(false);
-            mRidePost.setlOther_Riders(new ArrayList<OtherRider>());
-            mRidePost.setlLatitude("54 .32'");
-            mRidePost.setlLongitude("45 .32'");
+//            mRidePost.setlGirls(false);
+//            mRidePost.setlBoys(false);
+//            mRidePost.setlOther_Riders(new ArrayList<OtherRider>());
+//            mRidePost.setlLatitude("54 .32'");
+//            mRidePost.setlLongitude("45 .32'");
 
-            AppClient.addRide(mRidePost, new AppClient.INetworkResponse<JsonObject>() {
+//                JsonObject dataObject = new JsonObject();
+//                dataObject.addProperty("newride",mRidePost);
+                AppClient.addRide(mRidePost, new AppClient.INetworkResponse<JsonObject>() {
                 @Override
                 public void onSuccess(JsonObject data) {
-                    Snackbar.make(v,"Your RidePost has been added",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v,"Your RidePost has been added"+data.get("resp"),Snackbar.LENGTH_LONG).show();
                 }
 
                 @Override

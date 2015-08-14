@@ -138,7 +138,7 @@
                     android:background="@color/origin"/>
 
                 <com.example.root.sharide.CustomTextView
-                    android:id="@+id/destination"
+                    android:id="@+id/origin"
                     android:layout_below="@+id/fromText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -169,7 +169,7 @@
                     android:background="@color/destination"/>
 
                 <com.example.root.sharide.CustomTextView
-                    android:id="@+id/origin"
+                    android:id="@+id/destination"
                     android:layout_below="@+id/toText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
