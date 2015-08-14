@@ -4,6 +4,7 @@ package com.example.root.sharide;
  * Created by root on 22/5/15.
  */
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -23,7 +25,7 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
     private static EditText name;
     private static EditText emailId;
     private static EditText password;
-
+    Boolean otp_true;
     private Button registerButton;
 
     public SignUpFragment(){
@@ -50,42 +52,91 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        if (view == this.registerButton) {
+            if (getEditTextValue(name).length() > 1 && getEditTextValue(password).length() > 1 && getEditTextValue(emailId).length() > 1) {
 
-        startActivity(new Intent(getActivity(), RidesActivity.class));
 
-        getActivity().finish();
-        if(view == this.registerButton){
-            JsonObject dataObject = new JsonObject();
-            dataObject.addProperty("x-auth-name", getEditTextValue(name));
-            dataObject.addProperty("x-auth-password", getEditTextValue(password));
-            dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
-            Snackbar.make(getView(), "sign up initiated", Snackbar.LENGTH_LONG).show();
-            AppClient.registerUser(dataObject, new AppClient.INetworkResponse<JsonObject>() {
-                @Override
-                public void onSuccess(JsonObject data) {
-//                        System.out.print("mera response"+data);
-                    Snackbar.make(getView(), data.get("token").getAsString(), Snackbar.LENGTH_LONG).show();
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.popup_layout);
+                dialog.setTitle("Custom Alert Dialog");
 
-                    if(data.get("res").getAsBoolean()){
-                        Snackbar.make(getView(), "Account created.", Snackbar.LENGTH_LONG).show();
+                final EditText mPhone = (EditText) dialog.findViewById(R.id.phone);
+                Button send = (Button) dialog.findViewById(R.id.send);
+                Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
+                dialog.show();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.setCancelable(false);
+                JsonObject dataObject_OPT = new JsonObject();
+                dataObject_OPT.addProperty("x-auth-name", getEditTextValue(name));
+                AppClient.registerUser(dataObject_OPT, new AppClient.INetworkResponse<JsonObject>() {
+                    @Override
+                    public void onSuccess(JsonObject data) {
 
-                        SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
-                        prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
+                        if (data.get("res").getAsBoolean()) {
 
-                        startActivity(new Intent(getActivity(), RidesActivity.class));
+                            Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
 
-                        getActivity().finish();
+//                        startActivity(new Intent(getActivity(), RidesActivity.class));
+//
+//                        getActivity().finish();
+                            otp_true = true;
+                            return;
+                        } else {
+                            Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
+                            return;
+                        }
                     }
-                    else{
-                        Snackbar.make(getView(), data.get("res").getAsString(), Snackbar.LENGTH_LONG).show();
+
+                    @Override
+                    public void onError(Exception e) {
+                        Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
+                        return;
+
                     }
+                });
+
+                if(otp_true) {
+                    JsonObject dataObject = new JsonObject();
+                    dataObject.addProperty("x-auth-name", getEditTextValue(name));
+                    dataObject.addProperty("x-auth-password", getEditTextValue(password));
+                    dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
+                    AppClient.registerUser(dataObject, new AppClient.INetworkResponse<JsonObject>() {
+                        @Override
+                        public void onSuccess(JsonObject data) {
+
+                            if (data.get("res").getAsBoolean()) {
+
+                                Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
+
+                                SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
+                                prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
+
+//                        startActivity(new Intent(getActivity(), RidesActivity.class));
+//
+//                        getActivity().finish();
+                                return;
+                            } else {
+                                Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
+                            return;
+
+                        }
+                    });
+
                 }
 
-                @Override
-                public void onError(Exception e) {
-                    Snackbar.make(getView(), "Can not create account, Please try again.", Snackbar.LENGTH_SHORT).show();
-                }
-            });
+
+
+            } else {
+                Snackbar.make(getView(), "Check You have entered all feilds", Snackbar.LENGTH_LONG).show();
+            }
         }
+
     }
 }

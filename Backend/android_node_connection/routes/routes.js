@@ -84,7 +84,7 @@ module.exports = function(app) {
 
         rides.find({"millis":{$gte:"1439474834014"}},function(err, results)
         {
-                    console.log(results);
+                    // console.log(results);
             res.json({'rides' : results});
         });
         // function(err, results1)
