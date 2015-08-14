@@ -4,7 +4,7 @@ var login = require('config/login');
 var addride = require('config/addride');
 var nodemailer = require('nodemailer');
 var next30rides = require('config/next30rides');
-var rides = require('config/models');
+var rides = require('config/ridemodel');
 var mongoose = require('mongoose');
 var smtpTransport = require('nodemailer-smtp-transport');
 
@@ -79,9 +79,15 @@ module.exports = function(app) {
             res.json(found);
     });
     });
- app.get('/api/next30rides', function(req, res) {
-        var results = rides.find({"millis":{$gte:"1439474834014"}})
-        // (function(err, results1)
+ app.get('/api/getRides', function(req, res) {
+        // var response = rides.find({"millis":{$gte/:"1439474834014"}})
+
+        rides.find({"millis":{$gte:"1439474834014"}},function(err, results)
+        {
+                    console.log(results);
+            res.json({'rides' : results});
+        });
+        // function(err, results1)
         // {
         //     console.log(results1+results); // output all records
         // });
@@ -90,8 +96,8 @@ module.exports = function(app) {
         //     res.json(res);
         // });
         // console.log(results);
-        console.log(results.stringify);
-        res.json(results.stringify);
+        // console.log(results.stringify);
+        // res.json(results);
 
     });
  //This gets activated when we hit the change password in the profile section password 
@@ -135,20 +141,21 @@ module.exports = function(app) {
                 // console.log(req.body);
 
         // var adminemail = req.body["initiator"];
-        var date = req.body["date"]
-        var millis = req.body["millis"]
-        var starttime = req.body["time"];
+        var date = req.body["date"];
+        var millis = req.body["millis"];
+        var time = req.body["time"];
         var origin = req.body["origin"];
-        var end = req.body["destination"];
-        var availableseats = req.body["availableseats"];
+        var destination = req.body["destination"];
+        var has_booked = req.body["has_booked"];
+        var freeSpace = req.body["freeSpace"];
         var totalseats = req.body["totalseats"];
-        var onlygirls = req.body["onlygirls"];
+        var only_girls = req.body["only_girls"];
         var price = req.body["price"];
-        var mode = req.body["transport_mode"];
-        var modeinfo = req.body["transport_mode_info"];
+        var transport_mode = req.body["transport_mode"];
+        var transport_mode_info = req.body["transport_mode_info"];
         // var riders = req.body["riders"];
 
-        addride.addride(starttime,origin,end,date,millis,availableseats,totalseats,onlygirls,price,mode,modeinfo,function (found) {
+        addride.addride(time,origin,destination,date,millis,freeSpace,totalseats,only_girls,price,transport_mode,transport_mode_info,function (found) {
             console.log(found);
             res.json(found);
     });
