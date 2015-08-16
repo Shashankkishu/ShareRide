@@ -70,26 +70,47 @@ public class AppClient {
         @GET("/getrides")
         void getrides(Callback<GetRidesModel> jsonObjectCallback);
 
+        @POST("/checkOTP")
+        void checkOTP(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback);
+
+        @POST("/alreadyUser")
+        void alreadyUser(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback);
 
     }
-    public static void getrides( final INetworkResponse<GetRidesModel> listener) {
-        System.out.print("hit the get rides");
-        getRestAdapter().create(IApiClient.class).getrides(new Callback<GetRidesModel>() {
+    public static void checkOTP(JsonObject jsonObject, final INetworkResponse<JsonObject> listener) {
+
+        getRestAdapter().create(IApiClient.class).checkOTP(jsonObject, new Callback<JsonObject>() {
             @Override
-            public void success(GetRidesModel model, Response response) {
+            public void success(JsonObject jsonObject, Response response) {
 
                 if (listener != null) {
-                    listener.onSuccess(model);
+                    listener.onSuccess(jsonObject);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("GetRidesAPI", error.toString());
+                Log.e("RegisterUserAPI", error.toString());
             }
         });
     }
+    public static void alreadyUser(JsonObject jsonObject, final INetworkResponse<JsonObject> listener) {
 
+        getRestAdapter().create(IApiClient.class).alreadyUser(jsonObject, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+
+                if (listener != null) {
+                    listener.onSuccess(jsonObject);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("RegisterUserAPI", error.toString());
+            }
+        });
+    }
     public static void registerUser(JsonObject dataObject, final INetworkResponse<JsonObject> listener) {
            System.out.print("hit the reguster user");
         getRestAdapter().create(IApiClient.class).registerUser(dataObject, new Callback<JsonObject>() {
@@ -108,6 +129,24 @@ public class AppClient {
         });
     }
 
+
+    public static void getrides( final INetworkResponse<GetRidesModel> listener) {
+        System.out.print("hit the get rides");
+        getRestAdapter().create(IApiClient.class).getrides(new Callback<GetRidesModel>() {
+            @Override
+            public void success(GetRidesModel model, Response response) {
+
+                if (listener != null) {
+                    listener.onSuccess(model);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("GetRidesAPI", error.toString());
+            }
+        });
+    }
     public static void authenticateUser(JsonObject jsonObject, final INetworkResponse<JsonObject> listener) {
 
         getRestAdapter().create(IApiClient.class).authenticateUser(jsonObject, new Callback<JsonObject>() {

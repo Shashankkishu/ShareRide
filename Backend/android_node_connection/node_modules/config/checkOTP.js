@@ -1,0 +1,37 @@
+var crypto = require('crypto');
+var rand = require('csprng');
+var mongoose = require('mongoose');
+var user = require('config/models');
+var Regex = require("regex");
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+exports.checkOTP = function(OTP,email,password,name,callback) 
+{
+
+			if (OTP == "4567") {
+			var temp =rand(160, 36);
+			var newpass = temp + password;
+			var emailnew = email;
+			var token = crypto.createHash('sha512').update(email +rand).digest("hex");
+			var hashed_password = crypto.createHash('sha512').update(newpass).digest("hex");
+			 // console.log(email);
+			var newuser = new user({
+			    token: token,
+			    email: emailnew,
+			    name: name,
+			    hashed_password: hashed_password,
+			    salt :temp });
+				// console.log(newuser);
+			 	newuser.save(function (err) {
+			 		console.log(newuser);
+
+			    	callback({'res':true,'response':"Sucessfully Registered",'token':token});
+
+			    });
+			}
+			else {
+				callback({'res':false,'response':"Enter Correct OTP"});
+			}
+		// output all records
+	}
+

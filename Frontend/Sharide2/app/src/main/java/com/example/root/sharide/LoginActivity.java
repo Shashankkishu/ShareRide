@@ -1,5 +1,6 @@
 package com.example.root.sharide;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //    public static SharedPreferences settings;
     private ViewPager mLoginViewPager;
     private ActionBar mLoginActionBar;
     private List<Fragment> mLoginFragments;

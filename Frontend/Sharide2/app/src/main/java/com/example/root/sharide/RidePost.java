@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class RidePost {
 
+    @SerializedName("token_auth")
+    private String ltoken;
     @SerializedName("admin_name")
     private String ladminname;
     @SerializedName("origin")
@@ -38,6 +40,9 @@ public class RidePost {
     @SerializedName("latitude")
     private String lLatitude;
 
+    public String gettoken() {return ltoken;}
+
+    public void setltoken(String ltoken) {this.ltoken = ltoken;}
 
     public String getlOrigin() {return lOrigin;}
 

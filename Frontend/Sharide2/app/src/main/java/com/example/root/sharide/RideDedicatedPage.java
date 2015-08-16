@@ -9,16 +9,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by shashank on 26/7/15.
  */
 public class RideDedicatedPage extends AppCompatActivity implements View.OnClickListener {
+    Intent intent = getIntent();
+
+//
+//    private String time;
+    //    public static final String time = "time";
+//    String ride = intent.getAction();
+        RidePost currentride = GlobalObjects.rideGlobal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dedicated_rides);
-
+        TextView time = (TextView)findViewById(R.id.timededi);
+        time.setText(currentride.getlTime());
 //        Toolbar toolbar = (Toolbar) this.findViewById(R.id.my_awesome_toolbar);
 //        setSupportActionBar(toolbar);
         Button send =(Button)findViewById(R.id.sendbutton);

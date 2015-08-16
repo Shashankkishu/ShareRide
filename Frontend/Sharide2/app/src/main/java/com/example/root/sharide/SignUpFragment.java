@@ -9,8 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,56 +53,18 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(final View view) {
         if (view == this.registerButton) {
             if (getEditTextValue(name).length() > 1 && getEditTextValue(password).length() > 1 && getEditTextValue(emailId).length() > 1) {
 
 
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.popup_layout);
-                dialog.setTitle("Custom Alert Dialog");
 
-                final EditText mPhone = (EditText) dialog.findViewById(R.id.phone);
-                Button send = (Button) dialog.findViewById(R.id.send);
-                Button btnCancel = (Button) dialog.findViewById(R.id.cancel);
-                dialog.show();
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setCancelable(false);
-                JsonObject dataObject_OPT = new JsonObject();
-                dataObject_OPT.addProperty("x-auth-name", getEditTextValue(name));
-                AppClient.registerUser(dataObject_OPT, new AppClient.INetworkResponse<JsonObject>() {
-                    @Override
-                    public void onSuccess(JsonObject data) {
 
-                        if (data.get("res").getAsBoolean()) {
-
-                            Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
-
-//                        startActivity(new Intent(getActivity(), RidesActivity.class));
-//
-//                        getActivity().finish();
-                            otp_true = true;
-                            return;
-                        } else {
-                            Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
-                            return;
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
-                        return;
-
-                    }
-                });
-
-                if(otp_true) {
                     JsonObject dataObject = new JsonObject();
-                    dataObject.addProperty("x-auth-name", getEditTextValue(name));
-                    dataObject.addProperty("x-auth-password", getEditTextValue(password));
-                    dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
-                    AppClient.registerUser(dataObject, new AppClient.INetworkResponse<JsonObject>() {
+                dataObject.addProperty("x-auth-name", getEditTextValue(name));
+                dataObject.addProperty("x-auth-password", getEditTextValue(password));
+                dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
+                AppClient.registerUser(dataObject, new AppClient.INetworkResponse<JsonObject>() {
                         @Override
                         public void onSuccess(JsonObject data) {
 
@@ -108,8 +72,69 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
 
                                 Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
 
-                                SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
-                                prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
+
+
+                                final Dialog dialog = new Dialog(getActivity());
+                                dialog.setContentView(R.layout.otp_popup);
+                                dialog.setTitle("ENTER OTP");
+//                                dialog.setContentView(view);
+                                final EditText mOTP = (EditText) dialog.findViewById(R.id.otp);
+                                Button send = (Button) dialog.findViewById(R.id.OTPsend);
+                                Button btnCancel = (Button) dialog.findViewById(R.id.OTPcancel);
+                                dialog.show();
+                                dialog.setCanceledOnTouchOutside(false);
+                                dialog.setCancelable(false);
+                                send.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        JsonObject dataObject = new JsonObject();
+                                        dataObject.addProperty("OTP", getEditTextValue(mOTP));
+                                        dataObject.addProperty("x-auth-name", getEditTextValue(name));
+                                        dataObject.addProperty("x-auth-password", getEditTextValue(password));
+                                        dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
+                                        AppClient.checkOTP(dataObject, new AppClient.INetworkResponse<JsonObject>() {
+                                            @Override
+                                            public void onSuccess(JsonObject data) {
+//                                                System.out.print(data.getAsString());
+                                                if (data.get("res").getAsBoolean()) {
+
+                                                    GlobalObjects.token = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                    GlobalObjects.editor= GlobalObjects.token.edit();
+                                                    GlobalObjects.editor.putString("token", data.get("token").getAsString());
+                                                    GlobalObjects.String_token = data.get("token").getAsString();
+
+
+//                                                    (GlobalObjects.token).edit().putString("token", data.get("token").getAsString()).apply();
+//                                                    System.out.print("Token saved in shared preference" + (GlobalObjects.editor.toString()));
+
+                                                    startActivity(new Intent(getActivity(), RidesActivity.class));
+
+                                                    getActivity().finish();
+                                                }
+                                                else {
+                                                    Snackbar.make(getView(), data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onError(Exception e) {
+                                                Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
+                                                return;
+
+                                            }
+                                        });
+                                    }
+                                });
+//                                final Handler handler = new Handler();
+//                                handler.postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        // Do something after 7s = 7000ms
+//                                        checkOTPclass(getEditTextValue(mOTP), getEditTextValue(name),getEditTextValue(emailId),getEditTextValue(password));
+//                                    }
+//                                }, 15000);
+
 
 //                        startActivity(new Intent(getActivity(), RidesActivity.class));
 //
@@ -121,6 +146,16 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
                             }
                         }
 
+
+
+
+
+
+
+
+
+
+
                         @Override
                         public void onError(Exception e) {
                             Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
@@ -131,12 +166,22 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
 
                 }
 
-
-
-            } else {
+            else {
                 Snackbar.make(getView(), "Check You have entered all feilds", Snackbar.LENGTH_LONG).show();
+            }
+
             }
         }
 
-    }
+//    private void checkOTPclass (String OTP,String name,String email,String password) {
+//        if(OTP=="4567");
+//
+//
+//                        startActivity(new Intent(getActivity(), RidesActivity.class));
+//
+//                        getActivity().finish();
+//
+//    }
+
 }
+

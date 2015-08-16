@@ -52,7 +52,7 @@
             android:textSize="10sp"/>
 
         <com.example.root.sharide.CustomTextView
-            android:id="@+id/userTime"
+            android:id="@+id/timededi"
             android:layout_toRightOf="@+id/preTimeText"
             android:layout_below="@+id/userName"
             android:layout_width="wrap_content"

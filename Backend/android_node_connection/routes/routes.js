@@ -7,8 +7,9 @@ var next30rides = require('config/next30rides');
 var rides = require('config/ridemodel');
 var mongoose = require('mongoose');
 var smtpTransport = require('nodemailer-smtp-transport');
+var checkOTP = require('config/checkOTP');
+var alreadyUser = require('config/alreadyUser');
 
- 
 module.exports = function(app) {
  
  
@@ -20,7 +21,7 @@ module.exports = function(app) {
     app.get('/api/email', function(req, res)
      {
             var nodemailer = require('nodemailer');
-                console.log(nodemailer);
+                // console.log(nodemailer);
             // create reusable transporter object using SMTP transport
             var transporter = nodemailer.createTransport("SMTP",{
                 service: 'Gmail',
@@ -48,35 +49,54 @@ module.exports = function(app) {
                 if(error){
                     return console.log(error);
                 }
-                console.log('Message sent: ' + info.response);
+                // console.log('Message sent: ' + info.response);
 
             });
     });
  
  // This gets acivated when the user hits the login button (if he is a excisting user)
     app.post('/api/login',function(req,res){
-        console.log(JSON.stringify(req.body));
+        // console.log(JSON.stringify(req.body));
         var email = req.body["x-auth-email"];
         var password = req.body["x-auth-password"];
-        console.log('Password'+password);
-        console.log('Email'+email);
+        // console.log('Password'+password);
+        // console.log('Email'+email);
         login.login(email,password,function (found) {
-            console.log(found);
+            // console.log(found);
             res.json(found);
     });
     });
  
  // This gets activated when user hits the sign up 
     app.post('/api/signup',function(req,res){
-        console.log(JSON.stringify(req.body));
+        // console.log(JSON.stringify(req.body));
         var email = req.body["x-auth-email"];
         var password = req.body["x-auth-password"];
         var name = req.body["x-auth-name"];
         // console.log('Password'+password);
         // console.log('Email'+email);
         signup.signup(email,password,name,function (found) {
-            console.log(found);
+            // console.log(found);
             res.json(found);
+    });
+    });
+    app.post('/api/checkOTP',function(req,res){
+        console.log(JSON.stringify(req.body));;
+        var OTP = req.body["OTP"];
+        var email = req.body["x-auth-email"];
+        var password = req.body["x-auth-password"];
+        var name = req.body["x-auth-name"];
+        checkOTP.checkOTP(OTP,email,password,name,function (found) {
+        console.log(found);
+        res.json(found);
+    });
+    });
+    app.post('/api/alreadyUser',function(req,res){
+        console.log(JSON.stringify(req.body));;
+        var token = req.body["token"];
+        alreadyUser.alreadyUser(token,function (found) {
+        console.log(found);
+        res.json(found);
     });
     });
  app.get('/api/getRides', function(req, res) {
@@ -139,7 +159,7 @@ module.exports = function(app) {
 // This gets activiated when we hit the submit button in the add ride page .
  app.post('/api/addrides',function(req,res){
                 // console.log(req.body);
-
+            // console.log(req);
         // var adminemail = req.body["initiator"];
         var date = req.body["date"];
         var millis = req.body["millis"];
@@ -156,7 +176,7 @@ module.exports = function(app) {
         // var riders = req.body["riders"];
 
         addride.addride(time,origin,destination,date,millis,freeSpace,totalseats,only_girls,price,transport_mode,transport_mode_info,function (found) {
-            console.log(found);
+            // console.lsog(found);
             res.json(found);
     });
     });

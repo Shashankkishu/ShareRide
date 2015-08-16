@@ -3,7 +3,9 @@ package com.example.root.sharide;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -88,10 +90,6 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
 
         Submit =(Button)findViewById(R.id.button);
         Submit.setOnClickListener(this);
-
-
-
-
 
     }
 
@@ -196,11 +194,13 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
             if (v == Submit) {
                 Calendar calendar = Calendar.getInstance();
 
-                calendar.set(mYear,mMonth,mDay,
-                        mHour,mMinute, 0);
+                calendar.set(mYear, mMonth, mDay,
+                        mHour, mMinute, 0);
                 long startTime = calendar.getTimeInMillis();
-
+                String token =PreferenceManager.getDefaultSharedPreferences(getApplication()).getString("auth", "defaultStringIfNothingFound");
+                System.out.print("YAHA hai KYA likha TOKEN"+token);
                 RidePost mRidePost = new RidePost();
+//            mRidePost.setltoken(token);
             mRidePost.setlmillis(startTime);
             mRidePost.setlOrigin(mOrigin.getSelectedItem().toString());
             mRidePost.setlDestination(mEnd.getSelectedItem().toString());
@@ -235,18 +235,24 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
 //            mRidePost.setlLongitude("45 .32'");
 
 //                JsonObject dataObject = new JsonObject();
-//                dataObject.addProperty("newride",mRidePost);
+////                dataObject = mRidePost+token;
+////                dataObject.addProperty();
+//                dataObject.addProperty("newride", String.valueOf(mRidePost));
+//                dataObject.addProperty("token",token);
+//                SharedPreferences token = getApplication().getSharedPreferences("com.example.root.sharide", MODE_PRIVATE);
+//                String Strtoken = token.getString('AUTH_TOKEN',null);
+
                 AppClient.addRide(mRidePost, new AppClient.INetworkResponse<JsonObject>() {
-                @Override
-                public void onSuccess(JsonObject data) {
-                    Snackbar.make(v,"Your RidePost has been added"+data.get("resp"),Snackbar.LENGTH_LONG).show();
-                }
+                    @Override
+                    public void onSuccess(JsonObject data) {
+                        Snackbar.make(v, "Your RidePost has been added" + data.get("resp"), Snackbar.LENGTH_LONG).show();
+                    }
 
-                @Override
-                public void onError(Exception e) {
+                    @Override
+                    public void onError(Exception e) {
 
-                }
-            });
+                    }
+                });
                 startActivity(new Intent(NewRideActivity_shashank.this, RidesActivity.class));
 
             }

@@ -3,6 +3,7 @@ package com.example.root.sharide;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     @Override
     public void onBindViewHolder(RideViewHolder rideViewHolder, int i) {
         RidePost ride  = rideGetList.get(i);
+        GlobalObjects.rideGlobal = ride;
         rideViewHolder.userName.setText("Shashank Bhushan");
         rideViewHolder.userTime.setText(ride.getlTime());
         rideViewHolder.userDate.setText(ride.getlDate());
@@ -39,7 +42,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     }
 
     @Override
-    public RideViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
+    public RideViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.list_item_rides, viewGroup, false);
@@ -48,6 +51,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(viewGroup.getContext(), RideDedicatedPage.class);
+//                intent.setAction(rideGetList.get(i).getlDate());
                 viewGroup.getContext().startActivity(intent);
             }
         });
