@@ -30,9 +30,9 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
     Boolean otp_true;
     private Button registerButton;
 
-    public SignUpFragment(){
-
-    }
+//    public SignUpFragment(){
+//
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,10 +56,6 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
     public void onClick(final View view) {
         if (view == this.registerButton) {
             if (getEditTextValue(name).length() > 1 && getEditTextValue(password).length() > 1 && getEditTextValue(emailId).length() > 1) {
-
-
-
-
                     JsonObject dataObject = new JsonObject();
                 dataObject.addProperty("x-auth-name", getEditTextValue(name));
                 dataObject.addProperty("x-auth-password", getEditTextValue(password));
@@ -67,13 +63,8 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
                 AppClient.registerUser(dataObject, new AppClient.INetworkResponse<JsonObject>() {
                         @Override
                         public void onSuccess(JsonObject data) {
-
                             if (data.get("res").getAsBoolean()) {
-
                                 Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
-
-
-
                                 final Dialog dialog = new Dialog(getActivity());
                                 dialog.setContentView(R.layout.otp_popup);
                                 dialog.setTitle("ENTER OTP");
@@ -95,93 +86,40 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
                                         AppClient.checkOTP(dataObject, new AppClient.INetworkResponse<JsonObject>() {
                                             @Override
                                             public void onSuccess(JsonObject data) {
-//                                                System.out.print(data.getAsString());
                                                 if (data.get("res").getAsBoolean()) {
-
-                                                    GlobalObjects.token = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                                                    GlobalObjects.editor= GlobalObjects.token.edit();
-                                                    GlobalObjects.editor.putString("token", data.get("token").getAsString());
-                                                    GlobalObjects.String_token = data.get("token").getAsString();
-
-
-//                                                    (GlobalObjects.token).edit().putString("token", data.get("token").getAsString()).apply();
-//                                                    System.out.print("Token saved in shared preference" + (GlobalObjects.editor.toString()));
-
+                                                    SharedPreferences token = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                    token.edit().putString("token", data.get("token").getAsString()).apply();
                                                     startActivity(new Intent(getActivity(), RidesActivity.class));
-
                                                     getActivity().finish();
                                                 }
                                                 else {
                                                     Snackbar.make(getView(), data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
-
                                                 }
                                             }
-
                                             @Override
                                             public void onError(Exception e) {
                                                 Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
                                                 return;
-
                                             }
                                         });
                                     }
                                 });
-//                                final Handler handler = new Handler();
-//                                handler.postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        // Do something after 7s = 7000ms
-//                                        checkOTPclass(getEditTextValue(mOTP), getEditTextValue(name),getEditTextValue(emailId),getEditTextValue(password));
-//                                    }
-//                                }, 15000);
-
-
-//                        startActivity(new Intent(getActivity(), RidesActivity.class));
-//
-//                        getActivity().finish();
                                 return;
                             } else {
                                 Snackbar.make(getView(), (String) data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
                                 return;
                             }
                         }
-
-
-
-
-
-
-
-
-
-
-
                         @Override
                         public void onError(Exception e) {
                             Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
                             return;
-
                         }
                     });
-
                 }
-
             else {
                 Snackbar.make(getView(), "Check You have entered all feilds", Snackbar.LENGTH_LONG).show();
             }
-
             }
         }
-
-//    private void checkOTPclass (String OTP,String name,String email,String password) {
-//        if(OTP=="4567");
-//
-//
-//                        startActivity(new Intent(getActivity(), RidesActivity.class));
-//
-//                        getActivity().finish();
-//
-//    }
-
 }
-

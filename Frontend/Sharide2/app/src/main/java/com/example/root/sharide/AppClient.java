@@ -10,6 +10,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 
 /**
@@ -18,7 +19,7 @@ import retrofit.http.POST;
 public class AppClient {
 
 //    public static final String URL_UAT = "http://192.168.1.14:8080/api";
-    public static final String URL_UAT = "http://192.168.0.100:8080/api";
+    public static final String URL_UAT = "http://192.168.0.104:8080/api";
     public static final String URL_PROD = "";
     public static String URL = "";
     public static boolean isDebuggable = true;
@@ -65,7 +66,7 @@ public class AppClient {
         void authenticateUser(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback );
 
         @POST("/addrides")
-        void addNewRide(@Body RidePost ridePost, Callback<JsonObject> jsonObjectCallback);
+        void addNewRide(@Body RidePost ridePost,@Header("x-auth-token") String authToken, Callback<JsonObject> jsonObjectCallback);
 
         @GET("/getrides")
         void getrides(Callback<GetRidesModel> jsonObjectCallback);
@@ -73,8 +74,8 @@ public class AppClient {
         @POST("/checkOTP")
         void checkOTP(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback);
 
-        @POST("/alreadyUser")
-        void alreadyUser(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback);
+        @GET("/alreadyUser")
+        void alreadyUser(@Header("x-auth-token") String authtoken, Callback<JsonObject> jsonObjectCallback);
 
     }
     public static void checkOTP(JsonObject jsonObject, final INetworkResponse<JsonObject> listener) {
@@ -94,9 +95,9 @@ public class AppClient {
             }
         });
     }
-    public static void alreadyUser(JsonObject jsonObject, final INetworkResponse<JsonObject> listener) {
+    public static void alreadyUser(String authtoken, final INetworkResponse<JsonObject> listener) {
 
-        getRestAdapter().create(IApiClient.class).alreadyUser(jsonObject, new Callback<JsonObject>() {
+        getRestAdapter().create(IApiClient.class).alreadyUser(authtoken,new Callback<JsonObject>(){
             @Override
             public void success(JsonObject jsonObject, Response response) {
 
@@ -164,9 +165,9 @@ public class AppClient {
             }
         });
     }
-    public static void addRide(RidePost ridePost, final INetworkResponse<JsonObject> listener) {
+    public static void addRide(RidePost ridePost, String authToken, final INetworkResponse<JsonObject> listener) {
 
-        getRestAdapter().create(IApiClient.class).addNewRide(ridePost, new Callback<JsonObject>() {
+        getRestAdapter().create(IApiClient.class).addNewRide(ridePost, authToken, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
 

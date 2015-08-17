@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,8 +28,13 @@ public class RequestsRide extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.my_awesome_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_request);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        toolbar.setLogoDescription("Description");
+        toolbar.setTitle("Tittle");
         setSupportActionBar(toolbar);
+//        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.my_awesome_toolbar);
+//        setSupportActionBar(toolbar);
         mRequestActionBar = getSupportActionBar();
         mRequestActionBar.setDisplayShowTitleEnabled(false);
         mRequestActionBar.hide();

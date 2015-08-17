@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -57,32 +58,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(final View view) {
 
         if(view == this.createAccount){
+            SharedPreferences token = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            String authToken = token.getString("token", "null");
 
-            JsonObject dataObject = new JsonObject();
-            dataObject.addProperty("token","841b0e160345eff8ca55e264e572d1706df7b622324b198b5b6e695e90b55f90168b591adf0e73852fbb3cf2f59d3d4329d7ea51e2383bb316b50b9ec818af40");
-            AppClient.alreadyUser(dataObject, new AppClient.INetworkResponse<JsonObject>() {
+            AppClient.alreadyUser(authToken, new AppClient.INetworkResponse<JsonObject>() {
                 @Override
-                public void onSuccess(JsonObject data) {
-//                                                System.out.print(data.getAsString());
-                    if (data.get("res").getAsBoolean()) {
-                        startActivity(new Intent(getApplicationContext(), RidesActivity.class));
-                    } else {
-//                        Snackbar.make(view, data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                public void onSuccess(JsonObject jsonObject) {
+                    if(jsonObject.get("res").getAsBoolean()) {
+            Intent intent = new Intent(getApplicationContext(), RidesActivity.class);
+            startActivity(intent);
                     }
-                }
+                    else{
 
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                }
                 @Override
                 public void onError(Exception e) {
-                    Snackbar.make(view, "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
-                    return;
-
+                    Toast.makeText(getBaseContext(), "Check your Internet connection, Please try again.",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
-//                if()
-//            Intent intent = new Intent(this, LoginActivity.class);
-//            startActivity(intent);
-
             this.finish();
         }
     }

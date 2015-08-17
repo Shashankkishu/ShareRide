@@ -235,14 +235,20 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
 //            mRidePost.setlLongitude("45 .32'");
 
 //                JsonObject dataObject = new JsonObject();
-////                dataObject = mRidePost+token;
+//                dataObject = mRidePost+token;
 ////                dataObject.addProperty();
 //                dataObject.addProperty("newride", String.valueOf(mRidePost));
 //                dataObject.addProperty("token",token);
 //                SharedPreferences token = getApplication().getSharedPreferences("com.example.root.sharide", MODE_PRIVATE);
 //                String Strtoken = token.getString('AUTH_TOKEN',null);
 
-                AppClient.addRide(mRidePost, new AppClient.INetworkResponse<JsonObject>() {
+                //get the tokenfomsharedpreferences
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+
+                String authToken = pref.getString("token", "");
+
+                AppClient.addRide(mRidePost, authToken, new AppClient.INetworkResponse<JsonObject>() {
                     @Override
                     public void onSuccess(JsonObject data) {
                         Snackbar.make(v, "Your RidePost has been added" + data.get("resp"), Snackbar.LENGTH_LONG).show();

@@ -24,7 +24,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     public RidesListAdapter(List<RidePost> contactList) {
         this.rideGetList = contactList;
     }
-
+    private int position;
     @Override
     public int getItemCount() {
         return rideGetList.size();
@@ -33,23 +33,25 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     @Override
     public void onBindViewHolder(RideViewHolder rideViewHolder, int i) {
         RidePost ride  = rideGetList.get(i);
-        GlobalObjects.rideGlobal = ride;
         rideViewHolder.userName.setText("Shashank Bhushan");
         rideViewHolder.userTime.setText(ride.getlTime());
         rideViewHolder.userDate.setText(ride.getlDate());
         rideViewHolder.origin.setText(ride.getlOrigin());
         rideViewHolder.destination.setText(ride.getlDestination());
+        position = rideViewHolder.getAdapterPosition();
     }
 
     @Override
     public RideViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int i) {
-        View itemView = LayoutInflater.
+        final View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.list_item_rides, viewGroup, false);
         cv = (CardView)viewGroup.findViewById(R.id.card_view);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                GlobalObjects.rideGlobal = rideGetList.get(position);
                 Intent intent = new Intent(viewGroup.getContext(), RideDedicatedPage.class);
 //                intent.setAction(rideGetList.get(i).getlDate());
                 viewGroup.getContext().startActivity(intent);

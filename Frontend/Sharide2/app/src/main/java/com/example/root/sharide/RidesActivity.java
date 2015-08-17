@@ -100,7 +100,12 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRecyclerView.setLayoutManager(llm);
-        mRecyclerView.setOnClickListener(this);
+        mRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 //        RideGet ride1 = new RideGet();
 //
 //        ride1.setUserName("Shashank Bhushan");
@@ -125,7 +130,7 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
 //        ride2.setOrigin("pune, Maharashtra");
 //        ride2.setDestination("Kanpur , Uttar Pradesh");
 
-        List<RidePost> rideGetList = new ArrayList<>();
+        final List<RidePost> rideGetList = new ArrayList<>();
 //        rideGetList.add(ride1);
 //        rideGetList.add(ride2);
 //        rideGetList.add(ride3);
@@ -137,8 +142,14 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
 
             @Override
             public void onSuccess(GetRidesModel data) {
-                RidesListAdapter ridesListAdapter = new RidesListAdapter(data.getRides());
+                final RidesListAdapter ridesListAdapter = new RidesListAdapter(data.getRides());
                 mRecyclerView.setAdapter(ridesListAdapter);
+//                mRecyclerView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Hol
+//                    }
+//                });
             }
 
             @Override

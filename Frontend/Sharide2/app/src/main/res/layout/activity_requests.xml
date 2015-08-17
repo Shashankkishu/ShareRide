@@ -1,13 +1,33 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.root.sharide.RequestsRide"
-    android:background="@color/white">
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_request"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/theme_primary"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        >
+    </android.support.v7.widget.Toolbar>
 
-    <include layout="@layout/toolbar"/>
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:id="@+id/linear"
+        android:layout_below="@+id/toolbar_request"
+    >
+
+    <!--<include layout="@layout/toolbar"/>-->
 
     <com.example.root.sharide.SlidingTabLayout
         android:id="@+id/requestsSwipeTabs"
@@ -18,7 +38,9 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/requestsViewPager"
         android:layout_width="match_parent"
+        android:layout_below="@+id/requestsSwipeTabs"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
 </LinearLayout>
+</RelativeLayout>

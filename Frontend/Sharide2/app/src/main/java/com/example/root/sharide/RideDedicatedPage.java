@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 /**
  * Created by shashank on 26/7/15.
@@ -26,6 +27,8 @@ public class RideDedicatedPage extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dedicated_rides);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_dedicated);
+        setSupportActionBar(toolbar);
         TextView time = (TextView)findViewById(R.id.timededi);
         time.setText(currentride.getlTime());
 //        Toolbar toolbar = (Toolbar) this.findViewById(R.id.my_awesome_toolbar);

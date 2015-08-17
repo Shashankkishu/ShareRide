@@ -91,9 +91,10 @@ module.exports = function(app) {
         res.json(found);
     });
     });
-    app.post('/api/alreadyUser',function(req,res){
-        console.log(JSON.stringify(req.body));;
-        var token = req.body["token"];
+    app.get('/api/alreadyUser',function(req,res){
+        console.log(JSON.stringify(req.headers));;
+        var token = req.headers["x-auth-token"];
+        console.log(token);
         alreadyUser.alreadyUser(token,function (found) {
         console.log(found);
         res.json(found);
