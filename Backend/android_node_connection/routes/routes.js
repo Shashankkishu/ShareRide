@@ -20,15 +20,18 @@ module.exports = function(app) {
  
         res.end("share-ride-project");
     });
+
+    //when ever we call this method a mail sent to the reqest email with the content type in the request body 
     app.get('/api/email', function(req, res)
      {
+            //node mailer is a service used to connect to the SMTP connection i want to set up the server with 
             var nodemailer = require('nodemailer');
-                // console.log(nodemailer);
             // create reusable transporter object using SMTP transport
             var transporter = nodemailer.createTransport("SMTP",{
                 service: 'Gmail',
                 debug: true,
                 auth: {
+                    // <doubt> we have to find a away to secrealty store the password in the 
                     user: "shashankkishu@gmail.com",
                             pass: "gmailpassword"
                 }
@@ -58,30 +61,22 @@ module.exports = function(app) {
  
  // This gets acivated when the user hits the login button (if he is a excisting user)
     app.post('/api/login',function(req,res){
-        // console.log(JSON.stringify(req.body));
         var email = req.body["x-auth-email"];
         var password = req.body["x-auth-password"];
-        // console.log('Password'+password);
-        // console.log('Email'+email);
         login.login(email,password,function (found) {
-            // console.log(found);
-            res.json(found);
     });
     });
  
- // This gets activated when user hits the sign up 
+ // This gets activated when user hits the sign up which only sends the mail to the user with the OTP the real login is done byt he CheckOTP function
     app.post('/api/signup',function(req,res){
-        // console.log(JSON.stringify(req.body));
         var email = req.body["x-auth-email"];
         var password = req.body["x-auth-password"];
         var name = req.body["x-auth-name"];
-        // console.log('Password'+password);
-        // console.log('Email'+email);
         signup.signup(email,password,name,function (found) {
-            // console.log(found);
             res.json(found);
     });
     });
+    //this function creates all the auth token and hashkey witht the SHA512 key from my system and creates a new user
     app.post('/api/checkOTP',function(req,res){
         console.log(JSON.stringify(req.body));;
         var OTP = req.body["OTP"];
@@ -93,17 +88,17 @@ module.exports = function(app) {
         res.json(found);
     });
     });
+    //when a ride is booked ny the user and a request is sent to the admin of the ride with a token and the ride ID
     app.post('/api/addrequest',function(req,res){
         console.log(JSON.stringify(req.body));;
         var token = req.headers["x-auth-token"];
         var ID = req.body["ride-ID"];
-        // var password = req.body["x-auth-password"];
-        // var name = req.body["x-auth-name"];
         addrequest.addrequest(toekn,ID,function (found) {
         console.log(found);
         res.json(found);
     });
     });
+    // my app is opened for the second time then his token is checked against that of the exsisting users
     app.get('/api/alreadyUser',function(req,res){
         console.log(JSON.stringify(req.headers));;
         var token = req.headers["x-auth-token"];
@@ -113,6 +108,7 @@ module.exports = function(app) {
         res.json(found);
     });
     });
+    //when a filter is applied then this function recives a request with the set of parament
     app.get('/api/ridesQuery',function(req,res){
         console.log(JSON.stringify(req.headers));;
         var millis = req.headers["millis"];
@@ -124,26 +120,12 @@ module.exports = function(app) {
         res.json(found);
     });
     });
+    //when the rides activity is set the next
  app.get('/api/getRides', function(req, res) {
-        // var response = rides.find({"millis":{$gte/:"1439474834014"}})
-
         rides.find({"millis":{$gte:"1439474834014"}},function(err, results)
         {
-                    // console.log(results);
             res.json({'rides' : results});
         });
-        // function(err, results1)
-        // {
-        //     console.log(results1+results); // output all records
-        // });
-        // next30rides.next30rides({
-        //     console.log(res);
-        //     res.json(res);
-        // });
-        // console.log(results);
-        // console.log(results.stringify);
-        // res.json(results);
-
     });
  //This gets activated when we hit the change password in the profile section password 
     app.post('/api/chgpass', function(req, res) {
@@ -167,7 +149,7 @@ module.exports = function(app) {
             res.json(found);
     });
     });
- 
+ //
  
     app.post('/api/resetpass/chg', function(req, res) {
  
