@@ -19,7 +19,7 @@ import retrofit.http.POST;
 public class AppClient {
 
 //    public static final String URL_UAT = "http://192.168.1.14:8080/api";
-    public static final String URL_UAT = "http://192.168.0.104:8080/api";
+    public static final String URL_UAT = "http://172.26.177.72:8080/api";
     public static final String URL_PROD = "";
     public static String URL = "";
     public static boolean isDebuggable = true;
@@ -74,8 +74,14 @@ public class AppClient {
         @POST("/checkOTP")
         void checkOTP(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback);
 
+        @POST("/addrequest")
+        void addrequest(@Header("x-auth-token") String authToken,@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback);
+
         @GET("/alreadyUser")
         void alreadyUser(@Header("x-auth-token") String authtoken, Callback<JsonObject> jsonObjectCallback);
+
+        @GET("/ridesQuery")
+        void ridesQuery(@Header("origin") String orign,@Header("destination") String destination,@Header("millis") long millis, Callback<GetRidesModel> jsonObjectCallback);
 
     }
     public static void checkOTP(JsonObject jsonObject, final INetworkResponse<JsonObject> listener) {
@@ -97,7 +103,7 @@ public class AppClient {
     }
     public static void alreadyUser(String authtoken, final INetworkResponse<JsonObject> listener) {
 
-        getRestAdapter().create(IApiClient.class).alreadyUser(authtoken,new Callback<JsonObject>(){
+        getRestAdapter().create(IApiClient.class).alreadyUser(authtoken, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
 
@@ -129,7 +135,23 @@ public class AppClient {
             }
         });
     }
+    public static void addrequest(String token,JsonObject dataObject, final INetworkResponse<JsonObject> listener) {
+        System.out.print("hit the reguster user");
+        getRestAdapter().create(IApiClient.class).addrequest(token, dataObject, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
 
+                if (listener != null) {
+                    listener.onSuccess(jsonObject);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("RegisterUserAPI", error.toString());
+            }
+        });
+    }
 
     public static void getrides( final INetworkResponse<GetRidesModel> listener) {
         System.out.print("hit the get rides");
@@ -182,4 +204,22 @@ public class AppClient {
             }
         });
     }
+    public static void ridesQuery(String origin,String destination, long millis, final INetworkResponse<GetRidesModel> listener) {
+
+        getRestAdapter().create(IApiClient.class).ridesQuery(origin, destination, millis, new Callback<GetRidesModel>() {
+            @Override
+            public void success(GetRidesModel model, Response response) {
+
+                if (listener != null) {
+                    listener.onSuccess(model);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("Rides Query API", error.toString());
+            }
+        });
+    }
+
 }

@@ -87,8 +87,10 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
                                             @Override
                                             public void onSuccess(JsonObject data) {
                                                 if (data.get("res").getAsBoolean()) {
-                                                    SharedPreferences token = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                                                    token.edit().putString("token", data.get("token").getAsString()).apply();
+                                                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putString("token", data.get("token").getAsString());
+                                                    editor.apply();
                                                     startActivity(new Intent(getActivity(), RidesActivity.class));
                                                     getActivity().finish();
                                                 }

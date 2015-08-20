@@ -44,6 +44,8 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
 
     final Calendar c = Calendar.getInstance();
     private int mYear = c.get(Calendar.YEAR),mMonth = c.get(Calendar.MONTH),mDay = c.get(Calendar.DAY_OF_MONTH),mHour = c.get(Calendar.HOUR_OF_DAY),mMinute = c.get(Calendar.MINUTE);
+    int millisyear = c.get(Calendar.YEAR),millismonth = c.get(Calendar.MONTH),millisdayofmonth= c.get(Calendar.DAY_OF_MONTH),millishour= c.get(Calendar.HOUR_OF_DAY),millisminutes= c.get(Calendar.MINUTE);
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +155,9 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
                             // Display Selected date in textbox
+                            mYear = c.get(Calendar.YEAR);
+                            mMonth = c.get(Calendar.MONTH);
+                            mDay = c.get(Calendar.DAY_OF_MONTH);
                             mdatePicker.setText(dayOfMonth + "-"
                                     + (monthOfYear + 1) + "-" + year);
                         }
@@ -170,8 +175,8 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-
-                            // Display Selected time in textbox
+                            millishour = hourOfDay;
+                            millisminutes = minute;                            // Display Selected time in textbox
                             if(minute != 0)
                             mtimePicker.setText(hourOfDay + " : " + minute);
                             else
@@ -194,8 +199,10 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
             if (v == Submit) {
                 Calendar calendar = Calendar.getInstance();
 
-                calendar.set(mYear, mMonth, mDay,
-                        mHour, mMinute, 0);
+//                Calendar calendar = Calendar.getInstance();
+
+                calendar.set(millisyear, millismonth, millisdayofmonth,
+                        millishour, millisminutes, 0);
                 long startTime = calendar.getTimeInMillis();
                 String token =PreferenceManager.getDefaultSharedPreferences(getApplication()).getString("auth", "defaultStringIfNothingFound");
                 System.out.print("YAHA hai KYA likha TOKEN"+token);
@@ -268,7 +275,7 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
      * Callback method to be invoked when an item in this AdapterView has
      * been clicked.
      * <p/>
-     * Implementers can call getItemAtPosition(position) if they need
+     * Implementers can call getItoriginemAtPosition(position) if they need
      * to access the data associated with the selected item.
      *
      * @param parent   The AdapterView where the click happened.

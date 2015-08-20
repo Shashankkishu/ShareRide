@@ -4,11 +4,13 @@ var login = require('config/login');
 var addride = require('config/addride');
 var nodemailer = require('nodemailer');
 var next30rides = require('config/next30rides');
+var ridesQuery = require('config/ridesQuery');
 var rides = require('config/ridemodel');
 var mongoose = require('mongoose');
 var smtpTransport = require('nodemailer-smtp-transport');
 var checkOTP = require('config/checkOTP');
 var alreadyUser = require('config/alreadyUser');
+var addrequest = require('config/addrequest');
 
 module.exports = function(app) {
  
@@ -91,11 +93,33 @@ module.exports = function(app) {
         res.json(found);
     });
     });
+    app.post('/api/addrequest',function(req,res){
+        console.log(JSON.stringify(req.body));;
+        var token = req.headers["x-auth-token"];
+        var ID = req.body["ride-ID"];
+        // var password = req.body["x-auth-password"];
+        // var name = req.body["x-auth-name"];
+        addrequest.addrequest(toekn,ID,function (found) {
+        console.log(found);
+        res.json(found);
+    });
+    });
     app.get('/api/alreadyUser',function(req,res){
         console.log(JSON.stringify(req.headers));;
         var token = req.headers["x-auth-token"];
         console.log(token);
         alreadyUser.alreadyUser(token,function (found) {
+        console.log(found);
+        res.json(found);
+    });
+    });
+    app.get('/api/ridesQuery',function(req,res){
+        console.log(JSON.stringify(req.headers));;
+        var millis = req.headers["millis"];
+        var origin = req.headers["origin"];
+        var destination = req.headers["destination"];
+        console.log(millis + origin + destination);
+        ridesQuery.ridesQuery(millis,origin,destination,function (found) {
         console.log(found);
         res.json(found);
     });
@@ -162,6 +186,8 @@ module.exports = function(app) {
                 // console.log(req.body);
             // console.log(req);
         // var adminemail = req.body["initiator"];
+
+        var token = req.headers["x-auth-token"];
         var date = req.body["date"];
         var millis = req.body["millis"];
         var time = req.body["time"];
@@ -176,7 +202,7 @@ module.exports = function(app) {
         var transport_mode_info = req.body["transport_mode_info"];
         // var riders = req.body["riders"];
 
-        addride.addride(time,origin,destination,date,millis,freeSpace,totalseats,only_girls,price,transport_mode,transport_mode_info,function (found) {
+        addride.addride(token,time,origin,destination,date,millis,freeSpace,totalseats,only_girls,price,transport_mode,transport_mode_info,function (found) {
             // console.lsog(found);
             res.json(found);
     });

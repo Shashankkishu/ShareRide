@@ -123,11 +123,13 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
                 <ImageButton
+                    android:id="@+id/filter_done"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@drawable/ic_done_white_48dp"/>
                 <ImageButton
+                    android:id="@+id/filter_clear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -178,7 +180,7 @@
             android:layout_weight="1">
 
             <Spinner
-                android:id="@+id/originSpinner"
+                android:id="@+id/origin_query"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
@@ -202,7 +204,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1">
             <Spinner
-                android:id="@+id/endSpinner"
+                android:id="@+id/destination_query"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:prompt="@string/end"

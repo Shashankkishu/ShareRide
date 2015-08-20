@@ -21,8 +21,8 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     public  Context mContext;
     private List<RidePost> rideGetList;
     private CardView cv;
-    public RidesListAdapter(List<RidePost> contactList) {
-        this.rideGetList = contactList;
+    public RidesListAdapter(List<RidePost> Ridelist) {
+        this.rideGetList = Ridelist;
     }
     private int position;
     @Override

@@ -59,29 +59,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view == this.createAccount){
             SharedPreferences token = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-            String authToken = token.getString("token", "null");
+            String authToken = token.getString("token", null);
 
-            AppClient.alreadyUser(authToken, new AppClient.INetworkResponse<JsonObject>() {
-                @Override
-                public void onSuccess(JsonObject jsonObject) {
-                    if(jsonObject.get("res").getAsBoolean()) {
-            Intent intent = new Intent(getApplicationContext(), RidesActivity.class);
-            startActivity(intent);
+            if(authToken !=null){
+
+                AppClient.alreadyUser(authToken, new AppClient.INetworkResponse<JsonObject>() {
+                    @Override
+                    public void onSuccess(JsonObject jsonObject) {
+                        if(jsonObject.get("res").getAsBoolean()) {
+                            Intent intent = new Intent(getApplicationContext(), RidesActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+
                     }
-                    else{
-
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getBaseContext(), "Check your Internet connection, Please try again.",
+                                Toast.LENGTH_SHORT).show();
                     }
-
-                }
-                @Override
-                public void onError(Exception e) {
-                    Toast.makeText(getBaseContext(), "Check your Internet connection, Please try again.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-            this.finish();
+                });
+            }
+            else{
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
         }
     }
 }

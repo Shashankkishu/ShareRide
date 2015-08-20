@@ -6,6 +6,7 @@ package com.example.root.sharide;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
@@ -26,9 +27,9 @@ public class CustomTimePickerDialog extends TimePickerDialog {
     private TimePicker timePicker;
     private final OnTimeSetListener callback;
 
-    public CustomTimePickerDialog(Context context, OnTimeSetListener callBack,
+    public CustomTimePickerDialog(View.OnClickListener context, OnTimeSetListener callBack,
                                   int hourOfDay, int minute, boolean is24HourView) {
-        super(context, TimePickerDialog.THEME_HOLO_LIGHT, callBack, hourOfDay, minute / TIME_PICKER_INTERVAL,
+        super((Context) context, TimePickerDialog.THEME_HOLO_LIGHT, callBack, hourOfDay, minute / TIME_PICKER_INTERVAL,
                 is24HourView);
         this.callback = callBack;
     }

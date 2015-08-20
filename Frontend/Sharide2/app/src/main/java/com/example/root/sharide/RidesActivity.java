@@ -22,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -53,6 +55,7 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
     TimePicker mTimePicker;
     private TextView mtimePicker,mdatePicker;
     final Calendar c = Calendar.getInstance();
+    int millisyear = c.get(Calendar.YEAR),millismonth = c.get(Calendar.MONTH),millisdayofmonth= c.get(Calendar.DAY_OF_MONTH),millishour= c.get(Calendar.HOUR_OF_DAY),millisminutes= c.get(Calendar.MINUTE);
     private int mYear = c.get(Calendar.YEAR),mMonth = c.get(Calendar.MONTH),mDay = c.get(Calendar.DAY_OF_MONTH),mHour = c.get(Calendar.HOUR_OF_DAY),mMinute = c.get(Calendar.MINUTE);
 
     private RecyclerView mRecyclerView;
@@ -65,14 +68,14 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
          toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
-        mOrigin = (Spinner)findViewById(R.id.originSpinner);//to set the starting point of the journey .
+        mOrigin = (Spinner)findViewById(R.id.origin_query);//to set the starting point of the journey .
         ArrayAdapter<CharSequence> adapterorigin = ArrayAdapter.createFromResource(this,
                 R.array.Stops1, android.R.layout.simple_spinner_item);
         adapterorigin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mOrigin.setAdapter(adapterorigin);
 
 
-        mEnd = (Spinner)findViewById(R.id.endSpinner);// to set the end point of the journey .
+        mEnd = (Spinner)findViewById(R.id.destination_query);// to set the end point of the journey .
         ArrayAdapter<CharSequence> adapterend = ArrayAdapter.createFromResource(this,
                 R.array.Stops2,android.R.layout.simple_spinner_item);
         adapterend.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -161,6 +164,105 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
         });
         headerFragment = (RelativeLayout) this.findViewById(R.id.drawer_fragment);
         headerFragmentright = (RelativeLayout) this.findViewById(R.id.drawer_fragmentright);
+        ImageButton filter_done = (ImageButton)findViewById(R.id.filter_done);
+        ImageButton filter_clear = (ImageButton)findViewById(R.id.filter_clear);
+//        final Spinner origin_query = (Spinner)findViewById(R.id.origin_query);
+//        final Spinner destination_query = (Spinner)findViewById(R.id.destination_query);
+        final TextView time_query = (TextView)findViewById(R.id.timePicker);
+        time_query.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+                // Launch Time Picker Dialog
+                CustomTimePickerDialog tpd = new CustomTimePickerDialog(this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                millishour = hourOfDay;
+                                millisminutes = minute;
+                                // Display Selected time in textbox
+                                if(minute != 0)
+                                    time_query.setText(hourOfDay + " : " + minute);
+                                else
+                                    time_query.setText(hourOfDay + " : " + minute+"0");
+
+                            }
+                        }, mHour, mMinute, false);
+                tpd.show();
+
+            }
+        });
+        final TextView date_query = (TextView)findViewById(R.id.datePicker);
+        date_query.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                // Launch Date Picker Dialog
+                DatePickerDialog dpd = new DatePickerDialog(getApplication(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                millisdayofmonth=dayOfMonth;
+                                millismonth = monthOfYear;
+                                millisyear =year;
+                                // Display Selected date in textbox
+                                date_query.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                dpd.show();
+            }
+        });
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(millisyear, millismonth, millisdayofmonth,
+                millishour, millisminutes, 0);
+        final long millis = calendar.getTimeInMillis();
+//        long millis =
+//        Spinner
+        filter_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppClient.ridesQuery(mOrigin.getSelectedItem().toString(),mEnd.getSelectedItem().toString(),millis,new AppClient.INetworkResponse<GetRidesModel>() {
+                    Context mContext;
+
+                    @Override
+                    public void onSuccess(GetRidesModel data) {
+                        final RidesListAdapter ridesListAdapter = new RidesListAdapter(data.getRides());
+                        mRecyclerView.setAdapter(ridesListAdapter);
+//                mRecyclerView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Hol
+//                    }
+//                });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getBaseContext(), "Can not create account, Please try again.",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+            }
+        });
+        filter_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayoutRight.closeDrawer(Gravity.RIGHT);
+            }
+        });
         mTitle = "RIDES";
         mLeftDraweritems = new String[]{"Requests", "My Rides", "Show Autos"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

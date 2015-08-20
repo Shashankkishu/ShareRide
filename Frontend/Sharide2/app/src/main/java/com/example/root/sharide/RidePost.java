@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class RidePost {
 
-    @SerializedName("token_auth")
-    private String ltoken;
+    @SerializedName("ride-ID")
+    private String lID;
     @SerializedName("admin_name")
     private String ladminname;
     @SerializedName("origin")
@@ -39,10 +39,11 @@ public class RidePost {
 //    private Boolean lBoys;
     @SerializedName("latitude")
     private String lLatitude;
+//    public String getID;
 
-    public String gettoken() {return ltoken;}
+    public String getID() {return lID;}
 
-    public void setltoken(String ltoken) {this.ltoken = ltoken;}
+    public void setID(String lID) {this.lID = lID;}
 
     public String getlOrigin() {return lOrigin;}
 
