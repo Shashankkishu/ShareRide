@@ -30,7 +30,7 @@
 
         <com.example.root.sharide.CustomTextView
             android:id="@+id/userName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/userImage"
             android:padding="4dp"
@@ -40,7 +40,18 @@
             android:textColor="@color/button_material_dark"
             android:textStyle="bold"
             android:textSize="16sp"/>
-
+        <com.example.root.sharide.CustomTextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="4dp"
+            android:layout_alignTop="@+id/userImage"
+            android:layout_marginLeft="12dp"
+            android:text="₹ 500"
+            android:textColor="@color/button_material_dark"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
         <com.example.root.sharide.CustomTextView
             android:id="@+id/preTimeText"
             android:layout_width="wrap_content"
@@ -116,7 +127,8 @@
             android:layout_below="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -179,7 +191,18 @@
                     android:text="Supreme Business Park, Powai"/>
 
             </RelativeLayout>
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/only_girls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                card_view:border_width="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="2dp"
+                android:layout_alignParentRight="true"
+                card_view:border_color="@color/button_material_dark"
+                android:background="@android:color/holo_orange_light"
+                android:src="@drawable/girl39"
+                />
         </LinearLayout>
 
         <View
@@ -191,7 +214,7 @@
             android:background="@color/primary_dark_material_light"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user4"
+            android:id="@+id/user1"
             android:layout_below="@+id/separator2"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -201,7 +224,43 @@
             card_view:border_color="@color/button_material_dark"
             android:src="@drawable/user1"
             />
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user2"
+            android:layout_below="@+id/separator2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            card_view:border_width="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/user1"
+            card_view:border_color="@color/button_material_dark"
+            android:src="@drawable/user1"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user3"
+        android:layout_below="@+id/separator2"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        card_view:border_width="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/user2"
+            card_view:border_color="@color/button_material_dark"
+        android:src="@drawable/user1"
+        />
+        <com.example.root.sharide.CustomTextView
+            android:id="@+id/extrapeople"
+            android:layout_toRightOf="@+id/user3"
+            android:layout_below="@+id/separator2"
+            android:text="+3"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            card_view:border_width="0dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/button_material_dark"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:textSize="24sp"/>
         <com.example.root.sharide.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -212,7 +271,32 @@
             android:layout_marginLeft="4dp"
             android:textColor="@color/button_material_dark"
             android:layout_below="@+id/separator2" />
+        <com.example.root.sharide.CustomTextView
+            android:id="@+id/freeSpace"
+            android:layout_toLeftOf="@+id/transportIcon"
+             android:layout_below="@+id/separator2"
+             android:text="5"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            card_view:border_width="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="2dp"
+            android:textColor="@color/button_material_dark"
+            android:textStyle="bold"
+            android:layout_marginRight="16dp"
+            android:textSize="32sp"/>
 
+        <com.example.root.sharide.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available"
+            android:layout_toLeftOf="@+id/transportIcon"
+            android:layout_below="@+id/freeSpace"
+            android:textColor="@color/button_material_dark"
+            android:textSize="10sp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/transportIcon"
             android:layout_below="@+id/separator2"
@@ -230,6 +314,7 @@
         <com.example.root.sharide.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/transport_mode_info"
             android:text="By Taxi"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/transportIcon"
@@ -237,6 +322,7 @@
             android:textSize="10sp"
             android:layout_marginTop="4dp"
             android:textStyle="bold"/>
+
 
     </RelativeLayout>
 
