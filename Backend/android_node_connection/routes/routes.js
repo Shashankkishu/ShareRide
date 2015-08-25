@@ -57,6 +57,9 @@ module.exports = function(app) {
         var email = req.body["x-auth-email"];
         var password = req.body["x-auth-password"];
         login.login(email,password,function (found) {
+        console.log(found);
+        res.json(found);
+
     });
     });
  
@@ -116,7 +119,7 @@ module.exports = function(app) {
         console.log(JSON.stringify(req.body));;
         var token = req.headers["x-auth-token"];
         var ID = req.body["ride-ID"];
-        addrequest.addrequest(toekn,ID,function (found) {
+        addrequest.addrequest(token,ID,function (found) {
         console.log(found);
         res.json(found);
     });

@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,7 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
     public void onClick(View view) {
 
         if(view == this.signInButton){
+            Snackbar.make(getView(),"clicked", Snackbar.LENGTH_LONG).show();
 
             JsonObject dataobject = new JsonObject();
             dataobject.addProperty("x-auth-password", getEditTextValue(password));
@@ -61,19 +64,20 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
             AppClient.authenticateUser(dataobject, new AppClient.INetworkResponse<JsonObject>() {
                 @Override
                 public void onSuccess(JsonObject data) {
-
+                    Log.i(getTag(), "response of the login"+data.toString());
                     if(data.get("res").getAsBoolean()){
-                        Snackbar.make(getView(), "Login successful", Snackbar.LENGTH_LONG).show();
+                        Log.i(getTag(), "response of the login"+data.toString());
+                        Snackbar.make(getView(),data.get("res").getAsString(), Snackbar.LENGTH_LONG).show();
 
-                        SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
-                        prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
-
+//                        SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
+//                        prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
+                            GlobalObjects.String_token =data.get("token").getAsString();
                         startActivity(new Intent(getActivity(), RidesActivity.class));
 
                         getActivity().finish();
                     }
                     else{
-                        Snackbar.make(getView(),data.get("reponse").getAsString(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(),"check your credentials again", Snackbar.LENGTH_LONG).show();
                     }
                 }
 

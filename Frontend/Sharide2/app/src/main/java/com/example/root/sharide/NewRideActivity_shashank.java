@@ -197,6 +197,7 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
         }
         }
             if (v == Submit) {
+
                 Calendar calendar = Calendar.getInstance();
 
 //                Calendar calendar = Calendar.getInstance();
@@ -207,6 +208,7 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
                 String token =PreferenceManager.getDefaultSharedPreferences(getApplication()).getString("auth", "defaultStringIfNothingFound");
                 System.out.print("YAHA hai KYA likha TOKEN"+token);
                 RidePost mRidePost = new RidePost();
+                mRidePost.setladminname(GlobalObjects.username);
 //            mRidePost.setltoken(token);
             mRidePost.setlmillis(startTime);
             mRidePost.setlOrigin(mOrigin.getSelectedItem().toString());
@@ -251,16 +253,15 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
 
                 //get the tokenfomsharedpreferences
 
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+//                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
 
-                String authToken = pref.getString("token", "");
+                String authToken = GlobalObjects.String_token;
 
                 AppClient.addRide(mRidePost, authToken, new AppClient.INetworkResponse<JsonObject>() {
                     @Override
                     public void onSuccess(JsonObject data) {
                         Snackbar.make(v, "Your RidePost has been added" + data.get("resp"), Snackbar.LENGTH_LONG).show();
                     }
-
                     @Override
                     public void onError(Exception e) {
 

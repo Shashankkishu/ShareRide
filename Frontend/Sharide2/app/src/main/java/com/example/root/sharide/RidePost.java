@@ -35,11 +35,17 @@ public class RidePost {
     private Boolean lHas_booked;
     @SerializedName("only_girls")
     private Boolean lGirls;
+    @SerializedName("riders")
+    private ArrayList riders;
 //    @SerializedName("only_boys")
 //    private Boolean lBoys;
     @SerializedName("latitude")
     private String lLatitude;
 //    public String getID;
+
+    public ArrayList getrides() {return riders;}
+
+    public void setRiders(String lID) {this.riders = riders;}
 
     public String getID() {return lID;}
 

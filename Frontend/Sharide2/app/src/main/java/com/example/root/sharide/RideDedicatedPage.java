@@ -58,6 +58,8 @@ public class RideDedicatedPage extends AppCompatActivity implements View.OnClick
                 String authtoken = token.getString("token", "null");
                 JsonObject dataObject = new JsonObject();
                 dataObject.addProperty("ride-ID",currentride.getID());
+                dataObject.addProperty("phone",mPhone.getEditableText().toString());
+//                dataObject.addProperty("");
 //                dataObject.addProperty("x-auth-name", getEditTextValue(name));
 //                dataObject.addProperty("x-auth-password", getEditTextValue(password));
 //                dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
@@ -65,6 +67,7 @@ public class RideDedicatedPage extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onSuccess(JsonObject data) {
                         if (data.get("res").getAsBoolean()) {
+                            dialog.dismiss();
                         } else {
 //                            Snackbar.make(getView(), data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
                         }
