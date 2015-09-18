@@ -93,6 +93,7 @@ public class SignUpFragment extends Fragment implements  View.OnClickListener{
 //                                                    editor.apply();
                                                     GlobalObjects.String_token = data.get("token").getAsString();
                                                     GlobalObjects.username = getEditTextValue(name);
+                                                    Toast.makeText(getActivity(), GlobalObjects.String_token, Toast.LENGTH_SHORT).show();
                                                     startActivity(new Intent(getActivity(), RidesActivity.class));
                                                     getActivity().finish();
                                                 }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -72,6 +73,8 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
 //                        SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
 //                        prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
                             GlobalObjects.String_token =data.get("token").getAsString();
+                        Toast.makeText(getActivity(), GlobalObjects.String_token, Toast.LENGTH_SHORT).show();
+//                                Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getActivity(), RidesActivity.class));
 
                         getActivity().finish();

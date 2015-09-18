@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view == this.createAccount){
 //            SharedPreferences token = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
             String authToken = GlobalObjects.String_token;
-
+            Toast.makeText(getBaseContext(), GlobalObjects.String_token,Toast.LENGTH_SHORT).show();
+//                                Toast.LENGTH_SHORT).show();
             if(authToken !=null){
 
 //                AppClient.alreadyUser(authToken, new AppClient.INetworkResponse<JsonObject>() {

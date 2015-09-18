@@ -117,9 +117,9 @@ module.exports = function(app) {
     //when a ride is booked ny the user and a request is sent to the admin of the ride with a token and the ride ID
     app.post('/api/addrequest',function(req,res){
         console.log(JSON.stringify(req.body));;
-        var token = req.headers["x-auth-token"];
-        var ID = req.body["ride-ID"];
-        addrequest.addrequest(token,ID,function (found) {
+        // var token = req.headers["x-auth-token"];
+        // var ID = req.body["ride-ID"];
+        addrequest.addrequest(function (found) {
         console.log(found);
         res.json(found);
     });

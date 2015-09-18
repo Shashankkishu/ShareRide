@@ -50,7 +50,7 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
     private CharSequence mTitle;
     private ActionBarDrawerToggle mDrawerToggle,mDrawerToggleRight;
     private RelativeLayout headerFragment,headerFragmentright;
-    private FloatingActionButton addNewRide;
+        private FloatingActionButton addNewRide;
     Spinner mOrigin , mEnd;
     TimePicker mTimePicker;
     private TextView mtimePicker,mdatePicker;
