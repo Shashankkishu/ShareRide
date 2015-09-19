@@ -58,22 +58,45 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
     int millisyear = c.get(Calendar.YEAR),millismonth = c.get(Calendar.MONTH),millisdayofmonth= c.get(Calendar.DAY_OF_MONTH),millishour= c.get(Calendar.HOUR_OF_DAY),millisminutes= c.get(Calendar.MINUTE);
     private int mYear = c.get(Calendar.YEAR),mMonth = c.get(Calendar.MONTH),mDay = c.get(Calendar.DAY_OF_MONTH),mHour = c.get(Calendar.HOUR_OF_DAY),mMinute = c.get(Calendar.MINUTE);
 
+    private Button logoutButton;
+
     private RecyclerView mRecyclerView;
+
+    private SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
+    private TextView userName;
+    private TextView userEmail;
+    private TextView userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rides);
 
+        prefs = getSharedPreferences("MyPref", MODE_PRIVATE);
+        editor = prefs.edit();
+
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
          toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+
+        userName = (TextView) findViewById(R.id.userName);
+        userEmail = (TextView) findViewById(R.id.userEmail);
+        userImage = (TextView) findViewById(R.id.userImage);
+
+        userName.setText(SharedPreferencesManager.get(getApplicationContext()).getString("name"));
+        userEmail.setText(SharedPreferencesManager.get(getApplicationContext()).getString("email"));
+        userImage.setText(getInitials(SharedPreferencesManager.get(getApplicationContext()).getString("name")));
+
+        logoutButton = (Button) findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(this);
+
         mOrigin = (Spinner)findViewById(R.id.origin_query);//to set the starting point of the journey .
         ArrayAdapter<CharSequence> adapterorigin = ArrayAdapter.createFromResource(this,
                 R.array.Stops1, android.R.layout.simple_spinner_item);
         adapterorigin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mOrigin.setAdapter(adapterorigin);
-
 
         mEnd = (Spinner)findViewById(R.id.destination_query);// to set the end point of the journey .
         ArrayAdapter<CharSequence> adapterend = ArrayAdapter.createFromResource(this,
@@ -109,39 +132,8 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
 
             }
         });
-//        RideGet ride1 = new RideGet();
-//
-//        ride1.setUserName("Shashank Bhushan");
-//        ride1.setUserTime("11:45 AM");
-//        ride1.setUserDate("12/07/2015");
-//        ride1.setOrigin("Hostel 16, IIT Powai, Mumbai");
-//        ride1.setDestination("Oberoi , Estate Garden , Mumbai");
-//
-//        RideGet ride2 = new RideGet();
-//
-//
-//        RideGet ride3 = new RideGet();
-//        ride3.setUserName("Sidharth Dangi");
-//        ride3.setUserTime("05:20 PM");
-//        ride3.setUserDate("03/07/2015");
-//        ride3.setOrigin("Gallaria , Heernandani Gardens, Mumbai");
-//        ride3.setDestination("R City Mall, Ghatkopar West, Mumbai");
-//
-//        ride2.setUserName("R sundrarajan");
-//        ride2.setUserTime("10:30 AM");
-//        ride2.setUserDate("24/07/2015");
-//        ride2.setOrigin("pune, Maharashtra");
-//        ride2.setDestination("Kanpur , Uttar Pradesh");
-
         final List<RidePost> rideGetList = new ArrayList<>();
-//        rideGetList.add(ride1);
-//        rideGetList.add(ride2);
-//        rideGetList.add(ride3);
-//        rideGetList.add(ride1);
-//        rideGetList.add(ride2);
-//        rideGetList.add(ride3);
         AppClient.getrides(new AppClient.INetworkResponse<GetRidesModel>() {
-            Context mContext;
 
             @Override
             public void onSuccess(GetRidesModel data) {
@@ -314,6 +306,25 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
 
     }
 
+    public static String getInitials(String name) {
+
+        if (name.equalsIgnoreCase("")) {
+            return "";
+        } else {
+            String[] nameSplits = name.split(" ");
+            if (nameSplits.length > 1) {
+                return nameSplits[0].substring(0, 1) + nameSplits[1].substring(0, 1);
+            } else {
+                if(name.length() > 1){
+                    return name.substring(0, 2);
+                }
+                else{
+                    return name;
+                }
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -387,7 +398,16 @@ public class RidesActivity extends AppCompatActivity implements  View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (v == mdatePicker) {
+        if(v == logoutButton){
+            editor.clear();
+            editor.apply();
+
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+
+            this.finish();
+        }
+        else if (v == mdatePicker) {
             // Process to get Current Date
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);

@@ -13,6 +13,61 @@ public class RidePost {
     private String lID;
     @SerializedName("admin_name")
     private String ladminname;
+
+    public String getLadminemail() {
+        return ladminemail;
+    }
+
+    public void setLadminemail(String ladminemail) {
+        this.ladminemail = ladminemail;
+    }
+
+    public String getlID() {
+        return lID;
+    }
+
+    public void setlID(String lID) {
+        this.lID = lID;
+    }
+
+    public String getLadminname() {
+        return ladminname;
+    }
+
+    public void setLadminname(String ladminname) {
+        this.ladminname = ladminname;
+    }
+
+    public long getLmillis() {
+        return lmillis;
+    }
+
+    public void setLmillis(long lmillis) {
+        this.lmillis = lmillis;
+    }
+
+    public Integer getLfreeSpace() {
+        return lfreeSpace;
+    }
+
+    public void setLfreeSpace(Integer lfreeSpace) {
+        this.lfreeSpace = lfreeSpace;
+    }
+
+    public Boolean getlHas_booked() {
+        return lHas_booked;
+    }
+
+    public ArrayList getRiders() {
+        return riders;
+    }
+
+    public void setRiders(ArrayList riders) {
+        this.riders = riders;
+    }
+
+    @SerializedName("admin_email")
+    private String ladminemail;
     @SerializedName("origin")
     private String lOrigin;
     @SerializedName("millis")

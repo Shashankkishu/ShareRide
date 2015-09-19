@@ -19,7 +19,7 @@ import retrofit.http.POST;
 public class AppClient {
 
 //    public static final String URL_UAT = "http://192.168.1.14:8080/api";
-    public static final String URL_UAT = "http://172.26.178.140:8080/api";
+    public static final String URL_UAT = "http://172.20.205.6:8080/api";
     public static final String URL_PROD = "";
     public static String URL = "";
     public static boolean isDebuggable = true;
@@ -27,6 +27,7 @@ public class AppClient {
     private static final String xAuthEmail = "x-auth-email";
     private static final String xAuthPassword = "x-auth-password";
     private static final String xAuthName = "x-auth-name";
+
 
     /**
      * Generic response interface to be used by all

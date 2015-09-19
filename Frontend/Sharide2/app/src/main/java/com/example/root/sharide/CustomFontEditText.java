@@ -11,17 +11,17 @@ public class CustomFontEditText extends EditText {
 
     public CustomFontEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+//        init();
     }
 
     public CustomFontEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+//        init();
     }
 
     public CustomFontEditText(Context context) {
         super(context);
-        init();
+//        init();
     }
 
     private void init() {

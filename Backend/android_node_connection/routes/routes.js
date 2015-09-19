@@ -12,6 +12,8 @@ var checkOTP = require('config/checkOTP');
 var alreadyUser = require('config/alreadyUser');
 var addrequest = require('config/addrequest');
 
+var user = require('config/models');
+
 module.exports = function(app) {
  
  
@@ -117,13 +119,25 @@ module.exports = function(app) {
     //when a ride is booked ny the user and a request is sent to the admin of the ride with a token and the ride ID
     app.post('/api/addrequest',function(req,res){
         console.log(JSON.stringify(req.body));;
-        // var token = req.headers["x-auth-token"];
-        // var ID = req.body["ride-ID"];
-        addrequest.addrequest(function (found) {
-        console.log(found);
-        res.json(found);
+        var token = req.headers["x-auth-token"];
+
+
+        user.find({token:token},function(err,users){
+        var len = users.length;
+            // console.log(len);
+            if(len == 0){
+                console.log('NA');
+            }   
+            else{
+                console.log(users[0].name);
+                console.log(req.body["ride-ID"]);
+                addrequest.addrequest(users[0].email, req.body["ride-ID"], function (found) {
+                console.log(found);
+                res.json(found);
+            });
+        }
     });
-    });
+});
  
     //when the rides activity is set the next
  app.get('/api/getRides', function(req, res) {
@@ -139,6 +153,8 @@ module.exports = function(app) {
             // console.log(req);
         // var adminemail = req.body["initiator"];
 
+        var admin = req.body["admin_name"]; 
+        var email = req.body["admin_email"]; 
         var token = req.headers["x-auth-token"];
         var date = req.body["date"];
         var millis = req.body["millis"];
@@ -154,7 +170,7 @@ module.exports = function(app) {
         var transport_mode_info = req.body["transport_mode_info"];
         // var riders = req.body["riders"];
 
-        addride.addride(token,time,origin,destination,date,millis,freeSpace,totalseats,only_girls,price,transport_mode,transport_mode_info,function (found) {
+        addride.addride(admin,email,token,time,origin,destination,date,millis,freeSpace,totalseats,only_girls,price,transport_mode,transport_mode_info,function (found) {
             // console.lsog(found);
             res.json(found);
     });

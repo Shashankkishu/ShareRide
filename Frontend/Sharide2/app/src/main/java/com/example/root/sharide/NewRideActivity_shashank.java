@@ -32,7 +32,7 @@ import java.util.Calendar;
  * Created by Shashank Bhusha on 7/9/2015.
  */
 public class NewRideActivity_shashank extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener, AdapterView.OnItemClickListener {
-     Boolean mBoys= false,mGirls= false;
+    Boolean mBoys= false,mGirls= false;
     private TextView mtimePicker,mdatePicker;
     CheckBox mgirlsonly,mHaveRide ;
     private Spinner mOrigin , mEnd , mMode;
@@ -178,7 +178,7 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
                             millishour = hourOfDay;
                             millisminutes = minute;                            // Display Selected time in textbox
                             if(minute != 0)
-                            mtimePicker.setText(hourOfDay + " : " + minute);
+                                mtimePicker.setText(hourOfDay + " : " + minute);
                             else
                                 mtimePicker.setText(hourOfDay + " : " + minute+"0");
 
@@ -189,26 +189,25 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
         }
         if (v == mHaveRide) {
             if(mHaveRide.isChecked()){
-            Toast.makeText(getApplicationContext(),"You selected this",
-                    Toast.LENGTH_LONG).show();
-            mAmountCard.setVisibility(View.VISIBLE);
-            mTransportModeCard.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(),"You selected this",
+                        Toast.LENGTH_LONG).show();
+                mAmountCard.setVisibility(View.VISIBLE);
+                mTransportModeCard.setVisibility(View.VISIBLE);
 
+            }
         }
-        }
-            if (v == Submit) {
+        if (v == Submit) {
 
-                Calendar calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
 
 //                Calendar calendar = Calendar.getInstance();
 
-                calendar.set(millisyear, millismonth, millisdayofmonth,
-                        millishour, millisminutes, 0);
-                long startTime = calendar.getTimeInMillis();
-                String token =PreferenceManager.getDefaultSharedPreferences(getApplication()).getString("auth", "defaultStringIfNothingFound");
-                System.out.print("YAHA hai KYA likha TOKEN"+token);
-                RidePost mRidePost = new RidePost();
-                mRidePost.setladminname(GlobalObjects.username);
+            calendar.set(millisyear, millismonth, millisdayofmonth,
+                    millishour, millisminutes, 0);
+            long startTime = calendar.getTimeInMillis();
+            RidePost mRidePost = new RidePost();
+            mRidePost.setladminname(SharedPreferencesManager.get(getApplicationContext()).getString("name"));
+            mRidePost.setLadminemail(SharedPreferencesManager.get(getApplicationContext()).getString("email"));
 //            mRidePost.setltoken(token);
             mRidePost.setlmillis(startTime);
             mRidePost.setlOrigin(mOrigin.getSelectedItem().toString());
@@ -251,25 +250,25 @@ public class NewRideActivity_shashank extends AppCompatActivity implements Adapt
 //                SharedPreferences token = getApplication().getSharedPreferences("com.example.root.sharide", MODE_PRIVATE);
 //                String Strtoken = token.getString('AUTH_TOKEN',null);
 
-                //get the tokenfomsharedpreferences
+            //get the tokenfomsharedpreferences
 
 //                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
 
-                String authToken = GlobalObjects.String_token;
+            String authToken = GlobalObjects.String_token;
 
-                AppClient.addRide(mRidePost, authToken, new AppClient.INetworkResponse<JsonObject>() {
-                    @Override
-                    public void onSuccess(JsonObject data) {
-                        Snackbar.make(v, "Your RidePost has been added" + data.get("resp"), Snackbar.LENGTH_LONG).show();
-                    }
-                    @Override
-                    public void onError(Exception e) {
+            AppClient.addRide(mRidePost, authToken, new AppClient.INetworkResponse<JsonObject>() {
+                @Override
+                public void onSuccess(JsonObject data) {
+                    Snackbar.make(v, "Your RidePost has been added" + data.get("resp"), Snackbar.LENGTH_LONG).show();
+                }
+                @Override
+                public void onError(Exception e) {
 
-                    }
-                });
-                startActivity(new Intent(NewRideActivity_shashank.this, RidesActivity.class));
+                }
+            });
+            startActivity(new Intent(NewRideActivity_shashank.this, RidesActivity.class));
 
-            }
+        }
     }
 
     /**

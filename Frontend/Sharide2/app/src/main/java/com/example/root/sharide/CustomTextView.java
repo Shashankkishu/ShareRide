@@ -13,19 +13,19 @@ public class CustomTextView extends TextView {
     public CustomTextView(Context context) {
         super(context);
 
-        applyCustomFont(context, null);
+//        applyCustomFont(context, null);
     }
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     private void applyCustomFont(Context context, AttributeSet attrs) {

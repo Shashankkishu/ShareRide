@@ -26,7 +26,6 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static String TAG = "LaunchActivity";
@@ -35,14 +34,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String regid = null;
     private Context context= null;
     private Button createAccount;
-//    String token = GlobalObjects.editor.
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
+
         if (checkPlayServices())
         {
             gcm = GoogleCloudMessaging.getInstance(this);
@@ -58,13 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-//        token = LoginActivity.("token",LoginActivity.MODE_PRIVATE);
         this.createAccount = (Button) this.findViewById(R.id.createAccount);//add a account with tapping share with hop button
         this.createAccount.setOnClickListener(this);
     }
     @Override protected void onResume()
     {
-        super.onResume();       checkPlayServices();
+        super.onResume();
+        checkPlayServices();
     }
 
     @Override
@@ -93,37 +91,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(final View view) {
 
         if(view == this.createAccount){
-//            SharedPreferences token = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-            String authToken = GlobalObjects.String_token;
-            Toast.makeText(getBaseContext(), GlobalObjects.String_token,Toast.LENGTH_SHORT).show();
-//                                Toast.LENGTH_SHORT).show();
+
+            String authToken = SharedPreferencesManager.get(getApplicationContext()).getString("token");
+
             if(authToken !=null){
 
-//                AppClient.alreadyUser(authToken, new AppClient.INetworkResponse<JsonObject>() {
-//                    @Override
-//                    public void onSuccess(JsonObject jsonObject) {
-//                        if(jsonObject.get("res").getAsBoolean()) {
-                            Intent intent = new Intent(getApplicationContext(), RidesActivity.class);
-                            startActivity(intent);
-//                        }
-//                        else{
-//
-//                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                            startActivity(intent);
-//                        }
-//
-//                    }
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Toast.makeText(getBaseContext(), "Check your Internet connection, Please try again.",
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+                Intent intent = new Intent(getApplicationContext(), RidesActivity.class);
+                startActivity(intent);
             }
             else{
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
+
+            this.finish();
         }
     }
     private boolean checkPlayServices() {

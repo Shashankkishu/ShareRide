@@ -33,7 +33,8 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     @Override
     public void onBindViewHolder(RideViewHolder rideViewHolder, int i) {
         RidePost ride  = rideGetList.get(i);
-        rideViewHolder.userName.setText("Shashank Bhushan");
+        rideViewHolder.userImage.setText(RidesActivity.getInitials(ride.getlAdmin_name()));
+        rideViewHolder.userName.setText(ride.getlAdmin_name());
         rideViewHolder.userTime.setText(ride.getlTime());
         rideViewHolder.userDate.setText(ride.getlDate());
         rideViewHolder.origin.setText(ride.getlOrigin());
@@ -62,6 +63,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
 
 
     public static class RideViewHolder extends RecyclerView.ViewHolder {
+        protected TextView userImage;
         protected TextView userName;
         protected TextView userTime;
         protected TextView userDate;
@@ -79,6 +81,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
 //                }
 //            });
 
+            userImage =  (TextView) v.findViewById(R.id.userImage);
             userName =  (TextView) v.findViewById(R.id.userName);
             userDate = (TextView)  v.findViewById(R.id.userDate);
             userTime = (TextView)  v.findViewById(R.id.userTime);

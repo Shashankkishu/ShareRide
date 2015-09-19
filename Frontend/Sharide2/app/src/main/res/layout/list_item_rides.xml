@@ -20,13 +20,16 @@
         android:background="@color/white"
         >
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <TextView
             android:id="@+id/userImage"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/pp"
-            card_view:border_width="2dp"
-            card_view:border_color="#FF000000"/>
+            android:background="@drawable/circle_bg_theme"
+            android:text="RC"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            />
 
         <com.example.root.sharide.CustomTextView
             android:id="@+id/userName"
@@ -40,18 +43,18 @@
             android:textColor="@color/button_material_dark"
             android:textStyle="bold"
             android:textSize="16sp"/>
-        <com.example.root.sharide.CustomTextView
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="4dp"
-            android:layout_alignTop="@+id/userImage"
-            android:layout_marginLeft="12dp"
-            android:text="₹ 500"
-            android:textColor="@color/button_material_dark"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
+        <!--<com.example.root.sharide.CustomTextView-->
+            <!--android:id="@+id/price"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_alignTop="@+id/userImage"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:text="₹ 500"-->
+            <!--android:textColor="@color/button_material_dark"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textSize="24sp"/>-->
         <com.example.root.sharide.CustomTextView
             android:id="@+id/preTimeText"
             android:layout_width="wrap_content"
@@ -151,13 +154,15 @@
 
                 <com.example.root.sharide.CustomTextView
                     android:id="@+id/origin"
-                    android:layout_below="@+id/fromText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:textStyle="bold"
                     android:textColor="@color/button_material_dark"
-                    android:text="Hostel 16, IIT Powai"/>
+                    android:text="Hostel 16, IIT "
+                    android:layout_below="@+id/fromText"
+                    android:layout_alignLeft="@+id/fromText"
+                    android:layout_alignStart="@+id/fromText"
+                    android:layout_marginTop="6dp"/>
 
             </RelativeLayout>
 
@@ -178,150 +183,157 @@
                     android:padding="2dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:background="@color/destination"/>
+                    android:gravity="right"
+                    android:background="@color/destination"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
                 <com.example.root.sharide.CustomTextView
                     android:id="@+id/destination"
-                    android:layout_below="@+id/toText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:textColor="@color/button_material_dark"
                     android:textStyle="bold"
-                    android:text="Supreme Business Park, Powai"/>
+                    android:text="Supreme Powai"
+                    android:gravity="right"
+                    android:layout_below="@+id/toText"
+                    android:layout_alignRight="@+id/toText"
+                    android:layout_alignEnd="@+id/toText"
+                    android:layout_marginTop="6dp" />
 
             </RelativeLayout>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/only_girls"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:border_width="0dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="2dp"
-                android:layout_alignParentRight="true"
-                card_view:border_color="@color/button_material_dark"
-                android:background="@android:color/holo_orange_light"
-                android:src="@drawable/girl39"
-                />
+            <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:id="@+id/only_girls"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--card_view:border_width="0dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_marginLeft="2dp"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--card_view:border_color="@color/button_material_dark"-->
+                <!--android:background="@android:color/holo_orange_light"-->
+                <!--android:src="@drawable/girl39"-->
+                <!--/>-->
         </LinearLayout>
 
-        <View
-            android:id="@+id/separator2"
-            android:layout_below="@+id/locationsView"
-            android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/primary_dark_material_light"/>
+        <!--<View-->
+            <!--android:id="@+id/separator2"-->
+            <!--android:layout_below="@+id/locationsView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.2dp"-->
+            <!--android:layout_marginTop="12dp"-->
+            <!--android:background="@color/primary_dark_material_light"/>-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user1"
-            android:layout_below="@+id/separator2"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            card_view:border_width="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="4dp"
-            card_view:border_color="@color/button_material_dark"
-            android:src="@drawable/user1"
-            />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user2"
-            android:layout_below="@+id/separator2"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            card_view:border_width="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@+id/user1"
-            card_view:border_color="@color/button_material_dark"
-            android:src="@drawable/user1"
-            />
-        <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user3"
-        android:layout_below="@+id/separator2"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        card_view:border_width="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@+id/user2"
-            card_view:border_color="@color/button_material_dark"
-        android:src="@drawable/user1"
-        />
-        <com.example.root.sharide.CustomTextView
-            android:id="@+id/extrapeople"
-            android:layout_toRightOf="@+id/user3"
-            android:layout_below="@+id/separator2"
-            android:text="+3"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            card_view:border_width="0dp"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/button_material_dark"
-            android:textStyle="bold"
-            android:layout_marginLeft="8dp"
-            android:textSize="24sp"/>
-        <com.example.root.sharide.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Others going"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="4dp"
-            android:textColor="@color/button_material_dark"
-            android:layout_below="@+id/separator2" />
-        <com.example.root.sharide.CustomTextView
-            android:id="@+id/freeSpace"
-            android:layout_toLeftOf="@+id/transportIcon"
-             android:layout_below="@+id/separator2"
-             android:text="5"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            card_view:border_width="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="2dp"
-            android:textColor="@color/button_material_dark"
-            android:textStyle="bold"
-            android:layout_marginRight="16dp"
-            android:textSize="32sp"/>
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:id="@+id/user1"-->
+            <!--android:layout_below="@+id/separator2"-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--card_view:border_width="0dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_marginLeft="4dp"-->
+            <!--card_view:border_color="@color/button_material_dark"-->
+            <!--android:src="@drawable/user1"-->
+            <!--/>-->
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:id="@+id/user2"-->
+            <!--android:layout_below="@+id/separator2"-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--card_view:border_width="0dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_marginLeft="4dp"-->
+            <!--android:layout_toRightOf="@+id/user1"-->
+            <!--card_view:border_color="@color/button_material_dark"-->
+            <!--android:src="@drawable/user1"-->
+            <!--/>-->
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/user3"-->
+        <!--android:layout_below="@+id/separator2"-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--card_view:border_width="0dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_marginLeft="4dp"-->
+            <!--android:layout_toRightOf="@+id/user2"-->
+            <!--card_view:border_color="@color/button_material_dark"-->
+        <!--android:src="@drawable/user1"-->
+        <!--/>-->
+        <!--<com.example.root.sharide.CustomTextView-->
+            <!--android:id="@+id/extrapeople"-->
+            <!--android:layout_toRightOf="@+id/user3"-->
+            <!--android:layout_below="@+id/separator2"-->
+            <!--android:text="+3"-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--card_view:border_width="0dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:textColor="@color/button_material_dark"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:textSize="24sp"/>-->
+        <!--<com.example.root.sharide.CustomTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Others going"-->
+            <!--android:textSize="10sp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_marginLeft="4dp"-->
+            <!--android:textColor="@color/button_material_dark"-->
+            <!--android:layout_below="@+id/separator2" />-->
+        <!--<com.example.root.sharide.CustomTextView-->
+            <!--android:id="@+id/freeSpace"-->
+            <!--android:layout_toLeftOf="@+id/transportIcon"-->
+             <!--android:layout_below="@+id/separator2"-->
+             <!--android:text="5"-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--card_view:border_width="0dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_marginLeft="2dp"-->
+            <!--android:textColor="@color/button_material_dark"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:textSize="32sp"/>-->
 
-        <com.example.root.sharide.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Available"
-            android:layout_toLeftOf="@+id/transportIcon"
-            android:layout_below="@+id/freeSpace"
-            android:textColor="@color/button_material_dark"
-            android:textSize="10sp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="4dp"
-            android:textStyle="bold"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/transportIcon"
-            android:layout_below="@+id/separator2"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            card_view:border_width="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="2dp"
-            android:layout_alignParentRight="true"
-            card_view:border_color="@color/button_material_dark"
-            android:background="@android:color/holo_orange_light"
-            android:src="@drawable/ic_frontal_taxi_cab_64"
-            />
+        <!--<com.example.root.sharide.CustomTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Available"-->
+            <!--android:layout_toLeftOf="@+id/transportIcon"-->
+            <!--android:layout_below="@+id/freeSpace"-->
+            <!--android:textColor="@color/button_material_dark"-->
+            <!--android:textSize="10sp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:textStyle="bold"/>-->
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:id="@+id/transportIcon"-->
+            <!--android:layout_below="@+id/separator2"-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--card_view:border_width="0dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_marginLeft="2dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--card_view:border_color="@color/button_material_dark"-->
+            <!--android:background="@android:color/holo_orange_light"-->
+            <!--android:src="@drawable/ic_frontal_taxi_cab_64"-->
+            <!--/>-->
 
-        <com.example.root.sharide.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/transport_mode_info"
-            android:text="By Taxi"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/transportIcon"
-            android:textColor="@color/button_material_dark"
-            android:textSize="10sp"
-            android:layout_marginTop="4dp"
-            android:textStyle="bold"/>
+        <!--<com.example.root.sharide.CustomTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/transport_mode_info"-->
+            <!--android:text="By Taxi"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_below="@+id/transportIcon"-->
+            <!--android:textColor="@color/button_material_dark"-->
+            <!--android:textSize="10sp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:textStyle="bold"/>-->
 
 
     </RelativeLayout>

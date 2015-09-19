@@ -4,11 +4,8 @@ package com.example.root.sharide;
  * Created by root on 22/5/15.
  */
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -31,7 +27,6 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
     private EditText userName;
     private EditText password;
     private Button signInButton;
-    private String auth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,28 +50,24 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
     public void onClick(View view) {
 
         if(view == this.signInButton){
-            Snackbar.make(getView(),"clicked", Snackbar.LENGTH_LONG).show();
 
             JsonObject dataobject = new JsonObject();
             dataobject.addProperty("x-auth-password", getEditTextValue(password));
             dataobject.addProperty("x-auth-email", getEditTextValue(userName));
-            final String name = userName.getText().toString();
-//            final String Password = password.getText().toString();
             AppClient.authenticateUser(dataobject, new AppClient.INetworkResponse<JsonObject>() {
+
                 @Override
                 public void onSuccess(JsonObject data) {
                     Log.i(getTag(), "response of the login"+data.toString());
                     if(data.get("res").getAsBoolean()){
-                        Log.i(getTag(), "response of the login"+data.toString());
-                        Snackbar.make(getView(),data.get("res").getAsString(), Snackbar.LENGTH_LONG).show();
+                        Log.i(getTag(), "response of the login" + data.toString());
+                        Snackbar.make(getView(), data.get("res").getAsString(), Snackbar.LENGTH_LONG).show();
 
-//                        SharedPreferences prefs = getActivity().getSharedPreferences("com.example.root.sharide", Context.MODE_PRIVATE);
-//                        prefs.edit().putString(Config.AUTH_TOKEN, data.get("token").getAsString()).apply();
-                            GlobalObjects.String_token =data.get("token").getAsString();
-                        Toast.makeText(getActivity(), GlobalObjects.String_token, Toast.LENGTH_SHORT).show();
-//                                Toast.LENGTH_SHORT).show();
+                        SharedPreferencesManager.get(getActivity()).setString("token", data.get("token").getAsString());
+                        SharedPreferencesManager.get(getActivity()).setString("name", data.get("name").getAsString());
+                        SharedPreferencesManager.get(getActivity()).setString("email", data.get("email").getAsString());
+
                         startActivity(new Intent(getActivity(), RidesActivity.class));
-
                         getActivity().finish();
                     }
                     else{
@@ -89,15 +80,6 @@ public class SignInFragment extends Fragment implements  View.OnClickListener{
                     Snackbar.make(getView(), "Can not create account, Please try again.", Snackbar.LENGTH_SHORT).show();
                 }
             });
-//            if(true){
-////                startActivity(new Intent(getActivity(), RidesActivity.class));
-////                        getActivity().finish();
-//                startActivity(new Intent(getActivity(), RidesActivity.class));
-//                getActivity().finish();
-//            }
-//            else{
-//                Snackbar.make(getView(), "You Are Not Shashank", Snackbar.LENGTH_LONG).show();
-//            }
 
         }
     }

@@ -12,19 +12,19 @@ public class CustomFontCheckBox extends CheckBox{
     public CustomFontCheckBox(Context context) {
         super(context);
 
-        applyCustomFont(context, null);
+//        applyCustomFont(context, null);
     }
 
     public CustomFontCheckBox(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     public CustomFontCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     private void applyCustomFont(Context context, AttributeSet attrs) {

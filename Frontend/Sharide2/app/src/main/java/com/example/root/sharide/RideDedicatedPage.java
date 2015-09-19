@@ -21,13 +21,8 @@ import com.google.gson.JsonObject;
  * Created by shashank on 26/7/15.
  */
 public class RideDedicatedPage extends AppCompatActivity implements View.OnClickListener {
-    Intent intent = getIntent();
 
-//
-//    private String time;
-    //    public static final String time = "time";
-//    String ride = intent.getAction();
-        RidePost currentride = GlobalObjects.rideGlobal;
+    RidePost currentride = GlobalObjects.rideGlobal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,28 +49,22 @@ public class RideDedicatedPage extends AppCompatActivity implements View.OnClick
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences token = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-                String authtoken = token.getString("token", "null");
+
+                String authToken = SharedPreferencesManager.get(getApplicationContext()).getString("token");
                 JsonObject dataObject = new JsonObject();
                 dataObject.addProperty("ride-ID",currentride.getID());
                 dataObject.addProperty("phone",mPhone.getEditableText().toString());
-//                dataObject.addProperty("");
-//                dataObject.addProperty("x-auth-name", getEditTextValue(name));
-//                dataObject.addProperty("x-auth-password", getEditTextValue(password));
-//                dataObject.addProperty("x-auth-email", getEditTextValue(emailId));
-                AppClient.addrequest(authtoken,dataObject, new AppClient.INetworkResponse<JsonObject>() {
+                AppClient.addrequest(authToken,dataObject, new AppClient.INetworkResponse<JsonObject>() {
                     @Override
                     public void onSuccess(JsonObject data) {
                         if (data.get("res").getAsBoolean()) {
                             dialog.dismiss();
-                        } else {
-//                            Snackbar.make(getView(), data.get("response").getAsString(), Snackbar.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onError(Exception e) {
-//                        Snackbar.make(getView(), "Check Your Internet Connection", Snackbar.LENGTH_LONG).show();
+
                         return;
                     }
                 });

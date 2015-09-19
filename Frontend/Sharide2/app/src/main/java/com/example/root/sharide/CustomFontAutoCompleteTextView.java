@@ -15,25 +15,25 @@ public class CustomFontAutoCompleteTextView extends AutoCompleteTextView{
     public CustomFontAutoCompleteTextView(Context context) {
         super(context);
 
-        applyCustomFont(context, null);
+//        applyCustomFont(context, null);
     }
 
     public CustomFontAutoCompleteTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     public CustomFontAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     public CustomFontAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        applyCustomFont(context, attrs);
+//        applyCustomFont(context, attrs);
     }
 
     private void applyCustomFont(Context context, AttributeSet attrs) {
