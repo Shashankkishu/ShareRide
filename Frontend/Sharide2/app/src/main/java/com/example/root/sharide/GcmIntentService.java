@@ -66,7 +66,7 @@ public class GcmIntentService extends IntentService
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:+917754915990"));
+        intent.setData(Uri.parse("tel:+91"+GlobalObjects.phonenumber));
 //        startActivity(intent);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(          this)

@@ -13,6 +13,7 @@ public class GlobalObjects{
     public static String String_token;
     public static String reg_ID;
     public static String username;
+    public static String phonenumber;
 
 //    public   RidePost rideGlobal;
 }

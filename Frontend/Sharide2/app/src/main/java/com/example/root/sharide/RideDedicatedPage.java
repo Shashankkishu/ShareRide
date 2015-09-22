@@ -54,6 +54,7 @@ public class RideDedicatedPage extends AppCompatActivity implements View.OnClick
                 JsonObject dataObject = new JsonObject();
                 dataObject.addProperty("ride-ID",currentride.getID());
                 dataObject.addProperty("phone",mPhone.getEditableText().toString());
+                GlobalObjects.phonenumber = mPhone.getEditableText().toString();
                 AppClient.addrequest(authToken,dataObject, new AppClient.INetworkResponse<JsonObject>() {
                     @Override
                     public void onSuccess(JsonObject data) {
