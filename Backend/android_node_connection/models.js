@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var userSchema = mongoose.Schema({
     token : String,
     email: String,
+    name: String,
     hashed_password: String,
     salt : String,
     temp_str:String,
@@ -13,11 +14,12 @@ var userSchema = mongoose.Schema({
     sex:String,
     phone:int,
     activerides:Array,//emails of the riders 
-    location:String
+    location:String,
 });
 
 var rideSchema = mongoose.Schema({
 	adminemail:String,
+	admin_GCM_ID:String,
 	ricecode:String,
 	date:String,
 	starttime:String,
@@ -31,6 +33,7 @@ var rideSchema = mongoose.Schema({
 	mode:String,
 	modeinfo:String,
 	riders:Array,
+	pending_request:Array,
 	
 
 });

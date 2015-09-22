@@ -50,7 +50,7 @@ public class GcmIntentService extends IntentService
                     try
                     {
                             Thread.sleep(5000);
-                    } catch (InterruptedException e)
+                    } catch (InterruptedException ignored)
                     {
                     }
                 }
@@ -79,4 +79,5 @@ public class GcmIntentService extends IntentService
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
+
 }

@@ -34,28 +34,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String regid = null;
     private Context context= null;
     private Button createAccount;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
-
-        if (checkPlayServices())
-        {
-            gcm = GoogleCloudMessaging.getInstance(this);
-            regid = getRegistrationId(context);
-
-            if (regid.isEmpty())//checks if this already has registered or not
-            {
-                registerInBackground();
-            }
-            else
-            {
-                Log.d(TAG, "No valid Google Play Services APK found.");
-            }
-        }
-
         this.createAccount = (Button) this.findViewById(R.id.createAccount);//add a account with tapping share with hop button
         this.createAccount.setOnClickListener(this);
     }
@@ -91,9 +74,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(final View view) {
 
         if(view == this.createAccount){
+            if (checkPlayServices())
+            {
+                gcm = GoogleCloudMessaging.getInstance(this);
+                regid = getRegistrationId(context);
+
+                if (regid.isEmpty())//checks if this already has registered or not
+                {
+                    registerInBackground();
+                }
+                else
+                {
+                    Log.d(TAG, "No valid Google Play Services APK found.");
+                }
+            }
 
             String authToken = SharedPreferencesManager.get(getApplicationContext()).getString("token");
-
             if(authToken !=null){
 
                 Intent intent = new Intent(getApplicationContext(), RidesActivity.class);

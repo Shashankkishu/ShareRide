@@ -4,7 +4,7 @@
 var express  = require('express');
 var connect = require('connect');
 var app      = express();
-var port     = process.env.PORT || 8080;
+var port     = process.env.PORT || 8000;
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/node-android');

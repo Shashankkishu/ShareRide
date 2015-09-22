@@ -49,5 +49,6 @@
     <string name="action_example">Example action</string>
     <string name="title_activity_new_ride">NewRideActivity</string>
     <string name="title_activity_parallax_scroll">ParallaxScrollActivity</string>
+    <string name="gcm_defaultSenderId" />
 
 </resources>

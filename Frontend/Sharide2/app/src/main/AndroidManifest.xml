@@ -104,6 +104,13 @@
         </receiver>
 
         <service android:name=".GcmIntentService" />
+        <service
+            android:name="com.example.root.sharide.RegistrationIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

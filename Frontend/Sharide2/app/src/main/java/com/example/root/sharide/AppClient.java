@@ -19,7 +19,7 @@ import retrofit.http.POST;
 public class AppClient {
 
 //    public static final String URL_UAT = "http://192.168.1.14:8080/api";
-    public static final String URL_UAT = "http://172.20.205.6:8080/api";
+    public static final String URL_UAT = "http://192.168.0.107:8000/api";
     public static final String URL_PROD = "";
     public static String URL = "";
     public static boolean isDebuggable = true;
@@ -60,10 +60,10 @@ public class AppClient {
 
     private interface IApiClient {
 
-        @POST("/signup")
+        @POST("/signup")//to add a new user to the app
         void registerUser(@Body JsonObject dataObject, Callback<JsonObject> jsonObjectCallback);
 
-        @POST("/login")
+        @POST("/login")//to add a user who has reintalled the app.
         void authenticateUser(@Body JsonObject jsonObject, Callback<JsonObject> jsonObjectCallback );
 
         @POST("/addrides")
